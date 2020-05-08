@@ -1,0 +1,638 @@
+%% Time-stamp: <2020-05-07 15:57:09 admin>
+%% -*- coding:utf-8 -*-
+
+% This is the body of the paper. It should compile with latex and xelatex
+
+% xelatex lfg.tex; biber lfg
+% xelatex   lfg-fast.tex; bibtex lfg-fast
+
+
+
+
+\begin{document}
+\label{chap-lfg}
+% \setuplayouts
+% \pagediagram
+% \pagedesign
+
+\maketitle
+
+
+\section{Semantics}
+
+%\subsection{Background: Semantics for LFG and HPSG}
+
+HPSG  was conceived from the
+start as  a theory of the \textit{sign} \citep{Saussure16a-Fr}, 
+wherein each constituent is a pairing of form and meaning.  
+So semantic representation and composition  was built into HPSG (and the subsequent sister framework of Sign-Based Construction Grammar \citealt{BS2012a-ed}), as reflected in the title of the first HPSG
+book \citep{pollard;sag87}, \textit{Information-Based Syntax and
+  Semantics}.  LFG was not founded as a theory that included semantics, but a semantic component was developed for LFG shortly thereafter \citep{halvorsen83}.  The direction of semantics for LFG changed some ten years later and the dominant tradition is now Glue Semantics \citep{dalrymple;ea93,dalrymple99,Dalrymple2001a-u,asudeh-lpr,dalrymple;ea19}.  
+
+This section presents a basic introduction to Glue Semantics. 
+%As this is a handbook on HPSG and this is primarily a chapter on LFG, but Glue Semantics is in fact a general theory of semantic composition that is not necessarily tied to LFG, 
+Our goal is to present enough of the approach for readers to grasp the main intuitions behind it, without presupposing much knowledge of formal semantic theory.  The references listed at the end of the previous paragraph (especially \citet{dalrymple;ea19}) are good places to find additional discussion and references.  
+The rest of this section is organized as follows. In Section~\ref{sec:background} we present some more historical background on semantics for LFG and HPSG.  In Section~\ref{sec:glue-semantics}, we present Glue Semantics (\glue), as a general compositional system in its own right. Then, in Section~\ref{sec:glue-lfg} we look at the syntax--semantics interface with specific reference to an LFG syntax. For further details on semantic composition and the syntax--semantics interface in constraint-based theories of syntax, see \crossrefchapterw{semantics} for semantics for HPSG and \citet{asudeh-lfg-glue} for semantics for LFG.
+
+\subsection{Brief history of semantics for LFG and HPSG}
+\label{sec:background}
+
+%In developing a system of compositional semantics (i.e., rule-based
+%interpretation) for a syntactic framework, we are really engaged in
+%two tasks. First, we are engaged in a specification of the
+%syntax--semantics interface: How are primitives of the syntactic
+%framework mapped to primitives of the semantic framework and what are
+%the compositional reflexes of syntactic combinatorics? In other words,
+%what are the minimal semantic parts, how are they related to syntactic
+%parts, and how are syntactic rules interpreted such that combinations
+%of the parts yield interpretations? Second, we are engaged in a specification
+%of the semantic representation: How are meaningful parts formally
+%represented and how is their composition formally captured? For example, do
+%we have a classic static semantics \citep{montague70,montague73} or do
+%we have a dynamic semantics \citep{kamp81,heim82}? Is the semantics
+%extensional or intensional and, if the latter, how is intensionality
+%captured? What are the ontological and metaphysical assumptions about
+%the semantic representation?
+%
+%
+%
+%If we are approaching these questions from the direction of a syntactic theory and its attendant syntactic framework, the first question, to do with the syntax--semantics interface, tends to be primary. However, it is nevertheless important to bear in mind the second question, to do with semantic representation. Otherwise, the range of semantic approaches for a given syntactic theory might seem a bit bewildering. For example, 
+
+Various theories of semantic representation have been adopted by the different non-transformational syntactic frameworks over the years.  
+The precursor to HPSG, GPSG, was paired by its designers with a then fairly standard static Montogovian semantics \citep{GKPS85a}, but GPSG itself was subsequently adopted as the syntactic framework for Discourse Representation Theory \citep{kamp;reyle93}, a dynamic theory of semantics.  Initial work on semantics for LFG also assumed a Montogovian semantics \citep{halvorsen83,halvorsen;kaplan88}.  But with the increasing interest in Situation Semantics \citep{barwise;perry83} in the 1980s at Stanford University and environs (particularly SRI International and Xerox PARC), the sites of the foundational work on both HPSG and LFG, both frameworks also became associated with Situation Semantics.  In the case of LFG, this association was not foundational, manifesting primarily in the form of \citet{fenstad;ea87}, and soon waned. In contrast, as noted above, HPSG is a theory of signs and therefore had semantics incorporated into the theory from the outset.  Moreover, the chosen semantic theory was Situation Semantics, and this also carried over into the second main HPSG book \citep{ps2} and further \citep{ginzburg;sag00}.
+
+Beginning in the 90s, the focus subsequently shifted in new directions due to a new interest in computationally tractable
+theories of the syntax--semantics interface, to support efforts at
+large-scale grammar development, such as the ParGram project for LFG
+\citep{butt;ea99,butt;ea02-pargram} and the LinGO/Grammar Matrix projects for HPSG
+\citep{flickinger00,bender;ea02,bender;ea10}.\footnote{Readers can
+  explore the current incarnations of these projects at the following
+links (checked January 13, 2020):
+\begin{description}
+\item[ParGram] \url{https://pargram.w.uib.no}
+\item[LinGO] \url{http://lingo.stanford.edu}
+\item[Grammar Matrix] \url{http://matrix.ling.washington.edu/index.html}
+\end{description}
+} This naturally led to an
+interest in underspecified semantic representations, so that semantic
+ambiguities such as scope ambiguity could be compactly encoded without
+the need for full enumeration of all scope possibilities. Two examples
+for HPSG are \term{Lexical Resource Semantics} \citep{richter04,penn;richter04}
+and \term{Minimal Recursion Semantics}
+\citep{copestake;ea05}. Similarly, focus in semantics for LFG shifted
+to ways of encoding semantic ambiguity compactly and efficiently. This
+led to the development of Glue Semantics.
+
+
+
+\subsection{General Glue Semantics}
+\label{sec:glue-semantics}
+
+In this section, we briefly review Glue Semantics itself, 
+without reference to a particular
+syntactic framework.  Glue Semantics is a general framework for
+semantic composition that requires \term{some} independent syntactic
+framework but does not presuppose anything about syntax except
+headedness, which is an uncontroversial assumption across
+frameworks. This makes the system flexible and adaptable, and it has
+been paired not just with LFG, but also with Lexicalized
+Tree-Adjoining Grammar \citep{frank;genabith01}, HPSG
+\citep{asudeh;crouch01-hpsg-glue}, Minimalism \citep{Gotham2018}, and
+Universal Dependencies \citep{gotham;haug18}.
+
+In Glue Semantics, meaningful
+linguistic expressions --- including lexical items but also possibly
+particular syntactic configurations --- are associated
+with \term{meaning constructors} of the following form:\footnote{It is
+in principle possible for a linguistic expression to have a phonology
+and syntax but not contribute to interpretation, such as expletive
+pronouns like \word{there} and \word{it} or the \word{do}-support
+auxiliary in English; see \citet[113]{asudeh-lpr} for some discussion of
+expletive pronouns in the context of \glue.}
+\begin{exe}
+\ex \formula{\mathcal{M}:G}
+\end{exe}
+%
+\formula{\mathcal{M}} is an expression from a \term{meaning language}
+which can be anything that supports the lambda calculus; G is an
+expression of \term{linear logic} \citep{girard87}, which 
+specifies the semantic composition (it ``glues meanings
+together''), based on a syntactic parse.  By convention a colon separates them. Glue Semantics is related to (Type-Logical) Categorial
+Grammar \citep{carpenter97,morrill94a,morrill11,moortgat97}, but it
+assumes a separate syntactic representation for handling word order,
+so the terms of the linear logic specify just semantic
+composition without regard to word order 
+(see \citealt{asudeh-lpr} for further discussion). Glue Semantics is
+therefore useful in helping us focus on semantic composition in its
+own right.
+
+The principal compositional rules for Glue Semantics are those for the
+linear implication connective, $\multimap$, which are here presented in a
+natural deduction format:
+%
+%\begin{exe}
+%\ex \label{ex:implE} 
+%{\textbf{Functional application : Implication 
+%        elimination}} \\ \textbf{(modus ponens)}  \\[2ex] 
+%          \begin{tabular}[t]{c}
+%    \begin{lfgprooftree}
+%      \formula{f:A \linimp B} \hspace*{2em} \formula{a:A}
+%      \justifies
+%      \formula{f(a):B} \using \linimpE
+%    \end{lfgprooftree}
+%  \end{tabular}
+%  
+%  \bigskip
+%
+%\ex \label{ex:implI} 
+%   \textbf{Functional abstraction : Implication 
+%        introduction} \\ \textbf{(hypothetical reasoning)}} \\[2ex] 
+%          \begin{tabular}[t]{c}
+%    \begin{lfgprooftree}
+%      \[\formula{[a:A]}^1 
+%      \leadsto
+%      \formula{f:B}\]
+%      \justifies
+%      \formula{\lambda a.f:A \linimp B} \using \linimpIi{1}
+%    \end{lfgprooftree}
+%  \end{tabular} 
+%\end{exe}
+  
+\begin{exe}
+% % \ex \label{ex:implE} 
+% %   \begin{tabular}[t]{c}
+% %     \multicolumn{1}{l}{\textbf{Functional application : Implication 
+% %         elimination}} \\ 
+% %     \multicolumn{1}{l}{\textbf{(modus ponens)}}  \\[2ex] 
+% %     \begin{lfgprooftree}
+% %       \formula{f:A \linimp B} \hspace*{2em} \formula{a:A}
+% %       \justifies
+% %       \formula{f(a):B} \using \linimpE
+% %     \end{lfgprooftree}
+% %   \end{tabular}
+
+\ex \label{ex:implE}  Functional application : Implication elimination (modus ponens)\medskip\\ 
+    \begin{prooftree}
+      \hypo{f:A \multimap B} \hypo{a:A}
+      \infer2[$\multimap_{\mathcal{E}}$]{f(a):B}
+    \end{prooftree}\medskip\\
+  
+\ex \label{ex:implI} 
+    Functional abstraction : Implication introduction (hypothetical reasoning)\medskip\\ 
+    \begin{prooftree}
+      \hypo{[a:A]\textsuperscript{1}} 
+      \ellipsis{}{f:B}
+      \infer1[$\multimap_{\mathcal{I}, 1}$]{\lambda a.f:A \multimap B}
+    \end{prooftree}
+\end{exe}
+
+\noindent
+In each of these rules, the inference over the linear logic term,
+\formula{G}, corresponds to an operation on the meaning term, via the
+Curry-Howard Isomorphism between formulas and types
+\citep{curry;feys58,curry;feys95,howard80}\nocite{degroote95a}. The rule for eliminating the
+linear implication, which is just modus ponens, corresponds to
+functional application. The rule for introducing the linear
+implication, i.e. hypothetical reasoning, corresponds to functional
+abstraction. These rules will be seen in action shortly. 
+
+In general, given some head \formula{h} and some arguments of the head
+\formula{a_1, \ldots, a_n}, an implicational term like the following
+models consumption of the arguments to yield the saturated meaning of
+the head: \formula{a_1 \linimp \ldots \linimp a_n \linimp h}. For
+example, let us assume the following meaning constructor for the verb
+\word{likes} in the sentence \word{Max likes Sam}:
+%
+\begin{exe}
+  
+\ex \label{ex:semantics-1} \formula{\lambda
+  y\lambda x.\func{like}(y)(x):s \linimp m \linimp l}
+\end{exe}
+%
+Let's also assume that \formula{s} is mnemonic for the semantic
+correspondent of the (single word) phrase \word{Sam}, \formula{m}
+similarly mnemonic for \word{Max}, and \formula{l} for
+\word{likes}. In other words, the meaning constructor for \word{likes}
+would be associated with the lexical entry for the verb and specified
+in some general form such that it can be instantiated by the syntax
+(we will see an LFG example shortly); here we are assuming that the
+instantiation has given us the meaning constructor in
+(\ref{ex:semantics-1}).
+
+Given this separate level of syntax, the glue logic does not
+have to worry about word order and is permitted to be commutative
+(unlike the logic of Categorial Grammar). We could therefore freely
+reorder the arguments for \word{likes} above such that we instead
+first compose with the subject and then the object, but still yield
+the meaning appropriate for the intended sentence \word{Max likes Sam}
+(rather than for \word{Sam likes Max}):
+%
+\begin{exe}
+  
+\ex \label{ex:semantics-2}
+  \formula{\lambda
+  x\lambda y.\func{like}(y)(x):m \linimp s \linimp l}
+\end{exe}
+%
+As we will see below, the commutativity of the glue logic yields a
+simple and elegant treatment of quantifiers in non-subject positions,
+which are challenging for other frameworks \citep[see, for example, the
+careful pedagogical presentation of the issue
+in][244--263]{jacobson14}. 
+
+First, though, let us see how this argument reordering, otherwise
+known as Currying or Schönfinkelization, works in a
+proof, which also demonstrates the rules of implication elimination
+and introduction:
+%
+\begin{exe}
+  \ex \label{ex:semantics-3}
+  \attop{
+  \begin{prooftree}
+    \hypo{\lambda y.\lambda x.f(y)(x):a \linimp b \linimp c}     \hypo{[v:a]\textsuperscript{1}}
+    \infer2[$\multimap_{\mathcal{E}}$]{\lambda x.f(v)(x):b \multimap c} 
+    \hypo{[u:b]\textsuperscript{2}}
+    \infer2[$\multimap_{\mathcal{E}}$]{f(v)(u):c}
+    \infer1[$\multimap_{\mathcal{I},1}$]{\lambda v.f(v)(u):a \multimap c}    
+    \infer1[$\Rightarrow_\alpha$]{\lambda y.f(y)(u):a \multimap c}    
+    \infer1[$\multimap_{\mathcal{I},2}$]{\lambda u.\lambda y.f(y)(u):b \multimap a \multimap c}
+  \infer1[$\Rightarrow_\alpha$]{\lambda x.\lambda y.f(y)(x):b \multimap a \multimap c}
+\end{prooftree}
+}
+%\medskip\\
+\end{exe}
+
+\noindent
+The general structure of the proof is as follows. First, an assumption (hypothesis)
+ is formed for each argument, in the order in which they
+originally occur, corresponding to a variable in the meaning
+language. Each assumed argument is then allowed to combine with the
+implicational term by implication elimination. Once the implicational
+term has been entirely reduced, the assumptions are then discharged in
+the same order that they were made, through iterations of implication
+introduction. The result is the original term in curried form, such
+that the order of arguments has been reversed but without any change
+in meaning. The two steps of $\alpha$-equivalence, notated
+$\Rightarrow_\alpha$, are of course  not strictly
+necessary, but have been added for exposition. 
+
+This presentation has been purposefully abstract to highlight what is
+intrinsic to the glue logic, but we of course need to see how this
+ works with a syntactic framework to see how Glue Semantics
+actually handles semantic composition and the syntax--semantics interface. So next, in
+Section~\ref{sec:glue-lfg}, we will review \lfgglue, as this
+is the predominant pairing of syntactic framework and \glue.
+% Then, in
+% section Section~\ref{sec:glue-hpsg} we briefly review \hpsgglue, following
+% \citet{asudeh;crouch01-hpsg-glue}.
+
+\subsection{Glue Semantics for LFG}
+\label{sec:glue-lfg}
+
+\glue\ for LFG will be demonstrated by analyses of the following three
+examples:
+
+\begin{exe}
+\ex \label{ex:bca} Blake called Alex.
+\ex \label{ex:bce} Blake called everybody.
+\ex \label{ex:ecs} Everybody called somebody.
+\end{exe}
+%
+Example (\ref{ex:bca}) is a simple case of a transitive verb with two
+proper name arguments, but is sufficient to demonstrate the basics of
+the syntax--semantics interface in \lfgglue. Example (\ref{ex:bce}) is a
+case of a quantifier in object position, which is challenging to
+compositionality because there is a type clash between the simplest
+type we can assign to the verb, \bracket{e,\bracket{e,t}}, and the
+simplest type that would be assigned to the  quantifier,
+\bracket{\bracket{e,t},t}. In other theories, this necessitates either
+a syntactic operation which is syntactically undermotivated, e.g.\  
+Quantifier Raising in interpretive theories of composition, such as Logical Form semantics \citep{heim;kratzer98},
+or a type shifting operation of some kind in directly compositional
+approaches, as in categorial or type-logical frameworks; see
+\citet{jacobson14} for further discussion and references. Example
+(\ref{ex:ecs}) also demonstrates this point, but it more importantly
+demonstrates that quantifier scope ambiguity can be handled in \glue\
+without a) positing an undermotivated syntactic ambiguity and b) while
+maintaining the simplest types for both quantifiers.
+
+The relevant aspects of the lexical entries
+involved are shown in \tablew~\ref{tab:gen-lex}.  Other syntactic aspects of the lexical items, such as the fact that  
+\word{called} has a \feat{subject} and an \feat{object}, are specified
+in its meaning constructor. Minimal f-structures are
+provided below for each example. The subscript $\sigma$ indicates the
+semantic structure that corresponds to the annotated
+f-description. The types for the lexical items are the minimal types
+that would be expected. Note that in \glue\ these are normally
+associated directly with the semantic structures, for example
+\Up$_{\sigma{_e}}$ and (\up \feat{obj})$_{\sigma{_e}}$ \linimp\ (\up
+\feat{subj})$_{\sigma{_e}}$ \linimp\ \Up$_{\sigma{_t}}$, but they have
+been presented separately for better exposition; see
+\citet[299--305]{dalrymple;ea19} for further discussion. We do not
+show semantic structures here, as they are not necessary for this
+simple demonstration. 
+
+
+The generalized quantifier functions associated with everybody and somebody are, respectively, \func{every} and
+\func{some} in the meaning language.  The universal symbol $\forall$ in the glue
+logic/linear logic terms for the quantifiers ranges over semantic structures of type $t$.  It is unrelated to the generalized quantifiers.  Hence even the existential word \word{somebody} has the 
+universal $\forall$ in its linear logic glue term. 
+The $\forall$-terms thus
+effectively say that \emph{any} type $t$ semantic structure $S$ that
+can be found by application of proof rules such that the quantifier's
+semantic structure implies $S$ can serve as the scope of the quantifier;
+see \citet[393--394]{asudeh05-lp} for basic discussion of the
+interpretation of $\forall$ in linear logic. This will become clearer
+when quantifier scope is demonstrated shortly. 
+
+\begin{table}
+  \centering
+\begin{tabular}{lll}
+\lsptoprule
+Expression & Type & Meaning Constructor\\\midrule
+  \word{Alex} & $e$ & \formula{\func{alex}:\upsig}\\
+  \word{Blake} & $e$ & \formula{\func{blake}:\upsig}\\
+  \word{called} & \bracket{e,\bracket{e,t}} & \formula{\lambda
+                                              y.\lambda x.\func{call}(y)(x):(\up
+    \feat{obj})\sig \linimp\ (\up \feat{subj})\sig \linimp\ \upsig}\\
+  \word{everybody} & \bracket{\bracket{e,t},t} &
+  \formula{\lambda Q.\func{every}(\func{person},Q):\forall S.(\upsig \linimp\ S)
+    \linimp\ S}\\
+  \word{somebody} & \bracket{\bracket{e,t},t} &
+  \formula{\lambda Q.\func{some}(\func{person},Q):\forall S.(\upsig \linimp\ S) \linimp\ S}
+  \\\lspbottomrule
+\end{tabular}
+\caption{Relevant lexical details  for the three examples in (\ref{ex:bca}--\ref{ex:ecs})}
+\label{tab:gen-lex}
+\end{table}
+
+Let us assume the following f-structure for (\ref{ex:bca}):
+\begin{exe}
+\ex
+\begin{avm}
+  \lfgfst{c}[pred & \predvall{call}\\
+   subj & \lfgfst{b}[pred & \predvall{Blake}]\\
+   obj & \lfgfst{a}[pred & \predvall{Alex}]
+  ]
+\end{avm}
+\end{exe}
+%
+Note that here, unlike in previous sections, the \feat{pred} value for the verb does not list its subcategorization information. This is because we've made the standard move in much \glue\ work to suppress this information.\footnote{Indeed, one could go further and argue that 
+\feat{pred} values do not list subcategorization at all, in which case the move is not just notational, and that the Principles of Completeness and Coherence instead follow from the resource-sensitivity of Glue Semantics; for some
+discussion, see
+\citet{asudeh-lpr,asudeh;giorgolo-lfg12,asudeh;ea14-lfg}.} % 
+% ASH-HELP: I don't understand this last sentence or how it is relevant here.
+% STEVE: Hope this is better!
+ The
+f-structures are named mnemonically by the first character of their
+\feat{pred} value. All other f-structural information has been
+suppressed for simplicity. Based on these f-structure labels, the
+meaning constructors in the lexicon in \tablew~\ref{tab:gen-lex} are
+instantiated as follows ($\sigma$ subscripts suppressed):
+%
+\begin{exe}
+\ex \high{Instantiated meaning constructors}
+  % for \exr{bca}
+  % \word{Blake called Alex}}
+\ \\
+\begin{tabular}{@{}l}
+  \formula{\func{blake}:b}\\
+  \formula{\func{alex}:a}\\
+  \formula{\lambda y.\lambda x.\func{call}(y)(x):a \linimp\ b \linimp\ c}
+\end{tabular}
+\end{exe}
+%
+These meaning constructors yield the following proof, which is the
+only available normal form proof for the
+sentence:\footnote{\label{fn:norm-proof} The reader can think
+of the normal form proof as the minimal proof that yields the
+conclusion, without unnecessary steps of introducing and discharging
+assumptions; see \citet{asudeh;crouch02-wccfl-ellipsis} for some
+basic discussion.}
+
+\begin{exe}
+  \ex
+  \begin{minipage}[t]{.9\textwidth}
+    \high{Proof}\medskip\\
+  \nopagebreak
+\begin{prooftree}
+\hypo{\lambda y.\lambda x.\func{call}(y)(x):a \multimap b \multimap c} 
+\hypo{\func{alex}:a}
+\infer2[$\multimap_{\mathcal{E}}$]{(\lambda y.\lambda
+            x.\func{call}(y)(x))(\func{alex}):b \multimap c} 
+\infer1[$\Rightarrow_\beta$]{\lambda x.\func{call}(\func{alex})(x):b \multimap c}
+\hypo{\func{blake}:b} 
+\infer2[$\multimap_{\mathcal{E}}$]{(\lambda x.\func{call}(\func{alex})(x))(\func{blake}):c}
+\infer1[$\Rightarrow_\beta$]{\func{call}(\func{alex})(\func{blake}):c}
+\end{prooftree}
+\end{minipage}
+\end{exe}
+
+\noindent
+The final meaning language expression,
+\formula{\func{call}(\func{alex})(\func{blake})}, gives the correct truth
+  conditions for \word{Blake called Alex}, based on a standard
+  model theory.  
+
+Let us next assume the following f-structure for (\ref{ex:bce}):
+\begin{exe}
+\ex
+\begin{avm}
+  \lfgfst{c}[pred & \predvall{call}\\
+   subj & \lfgfst{b}[pred & \predvall{Blake}]\\
+   obj & \lfgfst{e}[pred & \predvall{everybody}]
+  ]
+\end{avm}
+\end{exe}
+%
+Based on these f-structure labels, the
+meaning constructors in the lexicon are
+instantiated as follows ($\sigma$ subscripts again suppressed):
+%
+\begin{exe}
+\ex\high{Instantiated meaning constructors}
+  % for \exr{bca}
+  % \word{Blake called Alex}}
+\ \\
+\begin{tabular}{@{}l}
+  \formula{\lambda y.\lambda x.\func{call}(y)(x):e \linimp\ b \linimp\
+  c}\\
+  \formula{\lambda Q.\func{every}(\func{person},Q):\forall S.(e \linimp\ S)
+  \linimp\ S}\\
+  \formula{\func{blake}:b}
+\end{tabular}
+\end{exe}
+%
+These meaning constructors yield the following proof, which is again 
+the only available normal form proof:\footnote{We have not presented
+  the proof rule for Universal Instantiation, but it is trivial; see \citet[396]{asudeh-lpr}.}
+
+\begin{exe}
+  \ex
+  \begin{minipage}[t]{0.9\textwidth}
+    \high{Proof}\medskip\\
+\nopagebreak
+\scalebox{0.95}{
+\begin{prooftree}[separation=.5em]\footnotesize
+\hypo{\parbox[t]{\widthof{$\lambda Q.\func{every}(\func{person},Q) :$}}{\raggedright$\lambda Q.\func{every}(\func{person},Q) :$\\$\forall S.(e \multimap S) \multimap S$}}
+\infer1[$\forall_{\mathcal{E}}[c/S]$]{\parbox[t]{\widthof{$\lambda Q.\func{every}(\func{person},Q) :$}}{\raggedright $\lambda Q.\func{every}(\func{person},Q) :$\\$(e \multimap c) \multimap c$}}
+
+\hypo{\parbox[b]{\widthof{$\lambda y.\lambda x.\func{call}(y)(x) :$}}{\raggedright$\lambda y.\lambda x.\func{call}(y)(x) :$\\$e \multimap b \multimap c$}}
+\hypo{[z:e]\textsuperscript{1}}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\lambda x.\func{call}(z)(x): b \multimap c}
+\hypo{\func{blake}:b}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\func{call}(z)(\func{blake}):c}
+\infer1[$\multimap_{\mathcal{I}, 1}$]{\lambda z.\func{call}(z)(\func{blake}):e \multimap c}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\func{every}(\func{person}, \lambda z.\func{call}(z)(\func{blake})):c}
+\end{prooftree}
+}
+\end{minipage}
+\end{exe}
+
+\noindent
+The final meaning language expression,
+\formula{\func{every}(\func{person}, \lambda
+  z.\func{call}(z)(\func{blake}))}, again gives the correct truth
+  conditions for \word{Blake called everybody}, based on a standard
+  model theory with generalized quantifiers. 
+  
+  Notice that the
+  quantifier need not be moved in the syntax --- it's just an
+  \feat{object} in f-structure --- and no special type shifting was
+  necessary. This is because the proof logic allows
+  us to temporarily fill the position of the object quantifier with a
+  hypothetical meaning constructor that consists of a type $e$ variable
+  paired with the linear logic term for the object; this assumption is
+  then discharged to return the scope
+  of the quantifier, \formula{e \linimp\ c}, and the corresponding
+  variable bound, to yield the function that maps individuals called
+  by Blake to a truth value. In other words, we have demonstrated that
+  this approach scopes the quantifier without positing an \emph{ad
+    hoc} syntactic operation and without complicating the type of the
+  object quantifier or the transitive verb. This is ultimately due to
+  the commutativity of the glue logic, linear logic, since the proof
+  does not have to deal with the elements of composition (words) in
+  their syntactic order, because the syntax is separately represented by
+  c-structure (not shown here) and f-structure. 
+
+Lastly, let us  assume the following f-structure for (\ref{ex:ecs}):
+\begin{exe}
+\ex
+\begin{avm}
+  \lfgfst{c}[pred & \predvall{call}\\
+   subj & \lfgfst{e}[pred & \predvall{everybody}]\\
+   obj & \lfgfst{s}[pred & \predvall{somebody}]
+  ]
+\end{avm}
+\end{exe}
+%
+Based on these f-structure labels, the
+meaning constructors in the lexicon are
+instantiated as follows:
+%
+\begin{exe}
+\ex \high{Instantiated meaning constructors}
+  % for \exr{bca}
+  % \word{Blake called Alex}}
+\ \\
+\begin{tabular}{@{}l}
+  \formula{\lambda y.\lambda x.\func{call}(y)(x):s \linimp\ e \linimp\
+  c}\\
+    \formula{\lambda Q.\func{some}(\func{person},Q):\forall S.(s \linimp\ S)
+    \linimp\ S}\\
+  \formula{\lambda Q.\func{every}(\func{person},Q):\forall S.(e \linimp\ S)
+  \linimp\ S}
+\end{tabular}
+\end{exe}
+%
+These meaning constructors yield the following proofs, which are 
+the only available normal form proofs, but there are two distinct
+proofs, because of the scope ambiguity:\footnote{We have made the
+  typical move in \glue\ work of not showing the trivial universal
+  instantiation step this time.}
+%
+\begin{exe}
+  \ex\label{ex:sws}
+  \begin{minipage}[t]{0.85\textwidth}
+    \high{Proof 1 (subject wide scope)}\medskip\\
+    \nopagebreak
+\scalebox{0.85}{
+\begin{prooftree}[separation=0.5em]\footnotesize
+\hypo{\parbox[b]{\widthof{$\lambda Q.\func{every}(\func{person},Q) :$}}{\raggedright $\lambda Q.\func{every}(\func{person},Q) :$\\$\forall S.(e \multimap  S) \multimap S$}}
+
+\hypo{\parbox[b]{\widthof{$\lambda Q.\func{some}(\func{person},Q) :$}}{\raggedright $\lambda Q.\func{some}(\func{person},Q) :$\\$\forall S.(s \multimap S) \multimap S$}}
+
+\hypo{\parbox[b]{\widthof{$\lambda y.\lambda x.\func{call}(y)(x) :$}}{\raggedright $\lambda y.\lambda x.\func{call}(y)(x) :$\\$s \multimap e \multimap c$}}
+\hypo{[v:s]\textsuperscript{1}}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\lambda x.\func{call}(v)(x):e \multimap c}
+\hypo{[u:e]\textsuperscript{2}}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\func{call}(v)(u):c}
+\infer1[$\multimap_{\mathcal{I}, 1}$]{\lambda v.\func{call}(v)(u):s \linimp c}
+\infer2[$\multimap_{\mathcal{E}}, \forall_{\mathcal{E}} [c/S], \Rightarrow_\beta$]{\func{some}(\func{person},\lambda v.\func{call}(v)(u)):c}
+\infer1[$\multimap_{\mathcal{I}, 2}$]{\lambda u.\func{some}(\func{person},\lambda v.\func{call}(v)(u)):e \multimap c}
+\infer2[$\multimap_{\mathcal{E}}, \forall_{\mathcal{E}} [c/S], \Rightarrow_\beta$]{\func{every}(\func{person},\lambda u.\func{some}(\func{person},\lambda v.\func{call}(v)(u)))}
+\infer1[$\Rightarrow_\alpha$]{\func{every}(\func{person},\lambda
+  u.\func{some}(\func{person},\lambda y.\func{call}(y)(u)))}
+\infer1[$\Rightarrow_\alpha$]{\func{every}(\func{person},\lambda
+  x.\func{some}(\func{person},\lambda y.\func{call}(y)(x)))}
+\end{prooftree}
+}
+\end{minipage}
+\medskip\\
+
+\ex\label{ex:ows}
+\begin{minipage}[t]{.9\textwidth}
+    \high{Proof 2 (object wide scope)}\medskip\\
+    \nopagebreak
+    \scalebox{0.95}{
+\begin{prooftree}[separation=0.5em]\footnotesize
+\hypo{\parbox[b]{\widthof{$\lambda Q.\func{some}(\func{person},Q) :$}}{\raggedright $\lambda Q.\func{some}(\func{person},Q) :$\\$\forall S.(s \multimap S) \multimap S$}}
+
+\hypo{\parbox[b]{\widthof{$\lambda Q.\func{every}(\func{person},Q) :$}}{\raggedright $\lambda Q.\func{every}(\func{person},Q) :$\\$\forall S.(e \multimap  S) \multimap S$}}
+
+
+\hypo{\parbox[b]{\widthof{$\lambda y.\lambda x.\func{call}(y)(x) :$}}{\raggedright $\lambda y.\lambda x.\func{call}(y)(x) :$\\$s \multimap e \multimap c$}}
+
+\hypo{[v:s]\textsuperscript{1}}
+\infer2[$\multimap_{\mathcal{E}}, \Rightarrow_\beta$]{\lambda x.\func{call}(v)(x):e \multimap c}
+\infer2[$\multimap_{\mathcal{E}}, \forall_{\mathcal{E}} [c/S], \Rightarrow_\beta$]{\func{every}(\func{person},\lambda x.\func{call}(v)(x)):c}
+\infer1[$\multimap_{\mathcal{I}, 1}$]{\lambda v.\func{every}(\func{person},\lambda x.\func{call}(v)(x)):s \multimap c}
+\infer2[$\multimap_{\mathcal{E}}, \forall_{\mathcal{E}} [c/S], \Rightarrow_\beta$]{\func{some}(\func{person},\lambda v.\func{every}(\func{person},\lambda x.\func{call}(v)(x)))}
+\infer1[$\Rightarrow_\alpha$]{\func{some}(\func{person},\lambda
+  y.\func{every}(\func{person},\lambda x.\func{call}(y)(x)))}
+\end{prooftree}
+}
+\end{minipage}
+\end{exe}
+%
+%\begin{sloppypar}\noindent 
+The final meaning language expressions in \exra{sws} and \exra{ows} 
+% , respectively  
+%   \formula{\func{every}(\func{person},\lambda
+%     x.\func{some}(\func{person},\lambda y.\func{call}(y)(x)))} and
+%   \formula{\func{some}(\func{person},\lambda
+%     y.\func{every}(\func{person},\lambda x.\func{call}(y)(x)))},
+   give
+  the two possible readings for the scope ambiguity, again assuming  a
+  standard model theory with generalized quantifiers. Once more,
+  notice that neither quantifier need be moved in the syntax --- they
+  are respectively just a \feat{subject} and an \feat{object} in
+  f-structure. And once more, no special type shifting is necessary. It
+  is a key strength of this approach that even quantifier scope
+  ambiguity can be captured without positing \emph{ad hoc} syntactic
+  operations (and, again, without complicating the type of the object
+  quantifier or the transitive verb). This is once more ultimately due to the
+  commutativity of the linear logic.
+%\end{sloppypar}
+
+
+ 
+\section*{Abbreviations}
+\section*{Acknowledgements}
+
+%\fi
+%REVERSE THESE AS NEEDED for lfg.tex:
+\printbibliography[heading=subbibliography,notkeyword=this] 
+%\input lfg-fast-bibliography.tex
+
+\end{document}
