@@ -1,4 +1,4 @@
-%% Time-stamp: <2020-05-07 15:57:09 admin>
+%% Time-stamp: <2020-05-10 10:49:39 admin>
 %% -*- coding:utf-8 -*-
 
 % This is the body of the paper. It should compile with latex and xelatex
@@ -29,10 +29,11 @@ So semantic representation and composition  was built into HPSG (and the subsequ
 book \citep{pollard;sag87}, \textit{Information-Based Syntax and
   Semantics}.  LFG was not founded as a theory that included semantics, but a semantic component was developed for LFG shortly thereafter \citep{halvorsen83}.  The direction of semantics for LFG changed some ten years later and the dominant tradition is now Glue Semantics \citep{dalrymple;ea93,dalrymple99,Dalrymple2001a-u,asudeh-lpr,dalrymple;ea19}.  
 
-This section presents a basic introduction to Glue Semantics. 
+This section presents a basic introduction to Glue Semantics (\glue); this is necessary to fully understand a not insignificant portion of LFG literature of the past fifteen years, which  interleaves LFG syntactic analysis with \glue\ semantic analysis. The section is not meant as a direct comparison of LFG and HPSG semantics, for two reasons. First, as explained in the previous paragraph, HPSG is inherently a theory that integrates syntax and semantics, but LFG is not; the semantic module that \glue\ provides for LFG can easily be pulled out, leaving the syntactic component exactly the same.  Second, as will become clear in the next section, at a suitable level of abstraction, \glue\ offers an underspecified theory of semantic composition, in particular scope relations, which is also the goal of what is arguably the most influential recent HPSG semantic approach, Minimal Recursion Semantics \citep{copestake;ea05}. But beyond observing this big-picture commonality, comparison of \glue\ and MRS would require a chapter in its own right. 
 %As this is a handbook on HPSG and this is primarily a chapter on LFG, but Glue Semantics is in fact a general theory of semantic composition that is not necessarily tied to LFG, 
-Our goal is to present enough of the approach for readers to grasp the main intuitions behind it, without presupposing much knowledge of formal semantic theory.  The references listed at the end of the previous paragraph (especially \citet{dalrymple;ea19}) are good places to find additional discussion and references.  
-The rest of this section is organized as follows. In Section~\ref{sec:background} we present some more historical background on semantics for LFG and HPSG.  In Section~\ref{sec:glue-semantics}, we present Glue Semantics (\glue), as a general compositional system in its own right. Then, in Section~\ref{sec:glue-lfg} we look at the syntax--semantics interface with specific reference to an LFG syntax. For further details on semantic composition and the syntax--semantics interface in constraint-based theories of syntax, see \crossrefchapterw{semantics} for semantics for HPSG and \citet{asudeh-lfg-glue} for semantics for LFG.
+Our goal is to present enough of Glue Semantics for readers to grasp the main intuitions behind it, without presupposing much knowledge of formal semantic theory.  The references listed at the end of the previous paragraph (especially \citet{dalrymple;ea19}) are good places to find additional discussion and references.
+
+The rest of this section is organized as follows. In Section~\ref{sec:background} we present some more historical background on semantics for LFG and HPSG.  In Section~\ref{sec:glue-semantics}, we present Glue Semantics, as a general compositional system in its own right. Then, in Section~\ref{sec:glue-lfg} we look at the syntax--semantics interface with specific reference to an LFG syntax. For further details on semantic composition and the syntax--semantics interface in constraint-based theories of syntax, see \crossrefchapterw{semantics} for semantics for HPSG and \citet{asudeh-lfg-glue} for Glue Semantics for LFG.
 
 \subsection{Brief history of semantics for LFG and HPSG}
 \label{sec:background}
@@ -59,19 +60,20 @@ The rest of this section is organized as follows. In Section~\ref{sec:background
 %If we are approaching these questions from the direction of a syntactic theory and its attendant syntactic framework, the first question, to do with the syntax--semantics interface, tends to be primary. However, it is nevertheless important to bear in mind the second question, to do with semantic representation. Otherwise, the range of semantic approaches for a given syntactic theory might seem a bit bewildering. For example, 
 
 Various theories of semantic representation have been adopted by the different non-transformational syntactic frameworks over the years.  
-The precursor to HPSG, GPSG, was paired by its designers with a then fairly standard static Montogovian semantics \citep{GKPS85a}, but GPSG itself was subsequently adopted as the syntactic framework for Discourse Representation Theory \citep{kamp;reyle93}, a dynamic theory of semantics.  Initial work on semantics for LFG also assumed a Montogovian semantics \citep{halvorsen83,halvorsen;kaplan88}.  But with the increasing interest in Situation Semantics \citep{barwise;perry83} in the 1980s at Stanford University and environs (particularly SRI International and Xerox PARC), the sites of the foundational work on both HPSG and LFG, both frameworks also became associated with Situation Semantics.  In the case of LFG, this association was not foundational, manifesting primarily in the form of \citet{fenstad;ea87}, and soon waned. In contrast, as noted above, HPSG is a theory of signs and therefore had semantics incorporated into the theory from the outset.  Moreover, the chosen semantic theory was Situation Semantics, and this also carried over into the second main HPSG book \citep{ps2} and further \citep{ginzburg;sag00}.
+The precursor to HPSG, GPSG, was paired by its designers with a then fairly standard static Montogovian semantics \citep{GKPS85a}, but GPSG itself was subsequently adopted as the syntactic framework used by \citet[9]{kamp;reyle93} for Discourse Representation Theory, a dynamic theory of semantics.  Initial work on semantics for LFG also assumed a Montogovian semantics \citep{halvorsen83,halvorsen;kaplan88}.  But with the increasing interest in Situation Semantics \citep{barwise;perry83} in the 1980s at Stanford University and environs (particularly SRI International and Xerox PARC), the sites of the foundational work on both HPSG and LFG, both frameworks also became associated with Situation Semantics.  In the case of LFG, this association was not foundational, manifesting primarily in the form of \citet{fenstad;ea87}, and soon waned. In contrast, as noted above, HPSG is a theory of signs and therefore had semantics incorporated into the theory from the outset.  Moreover, the chosen semantic theory was Situation Semantics, and this also carried over into the second main HPSG book \citep{ps2} and further \citep{ginzburg;sag00}.
 
 Beginning in the 90s, the focus subsequently shifted in new directions due to a new interest in computationally tractable
 theories of the syntax--semantics interface, to support efforts at
 large-scale grammar development, such as the ParGram project for LFG
-\citep{butt;ea99,butt;ea02-pargram} and the LinGO/Grammar Matrix projects for HPSG
-\citep{flickinger00,bender;ea02,bender;ea10}.\footnote{Readers can
+\citep{butt;ea99,butt;ea02-pargram} and the LinGO/Grammar Matrix and CoreGram projects for HPSG
+\citep{flickinger00,bender;ea02,bender;ea10,MuellerCoreGram}.\footnote{Readers can
   explore the current incarnations of these projects at the following
-links (checked January 13, 2020):
+links (checked \today):
 \begin{description}
 \item[ParGram] \url{https://pargram.w.uib.no}
 \item[LinGO] \url{http://lingo.stanford.edu}
 \item[Grammar Matrix] \url{http://matrix.ling.washington.edu/index.html}
+\item[CoreGram] \url{https://hpsg.hu-berlin.de/Projects/CoreGram.html}
 \end{description}
 } This naturally led to an
 interest in underspecified semantic representations, so that semantic
@@ -128,7 +130,7 @@ own right.
 
 The principal compositional rules for Glue Semantics are those for the
 linear implication connective, $\multimap$, which are here presented in a
-natural deduction format:
+natural deduction format, in which each connective has an elimination rule (\formula{\linimpE}, in this case) and an introduction rule (\formula{\linimpI}, in this case).:
 %
 %\begin{exe}
 %\ex \label{ex:implE} 
@@ -187,14 +189,7 @@ natural deduction format:
 \end{exe}
 
 \noindent
-In each of these rules, the inference over the linear logic term,
-\formula{G}, corresponds to an operation on the meaning term, via the
-Curry-Howard Isomorphism between formulas and types
-\citep{curry;feys58,curry;feys95,howard80}\nocite{degroote95a}. The rule for eliminating the
-linear implication, which is just modus ponens, corresponds to
-functional application. The rule for introducing the linear
-implication, i.e. hypothetical reasoning, corresponds to functional
-abstraction. These rules will be seen in action shortly. 
+Focusing first on the right-hand, linear logic side, the implication elimination rule is just standard modus ponens. The implication introduction rule is hypothetical reasoning. A hypothesis is made in the first line as an assumption, indicated by presenting it in square brackets with an index that flags the particular hypothesis/assumption. Given this hypothesis, if through some series of proof steps, indicated by the vertical ellipsis, we derive a term, then we are entitled to withdraw the assumption, using its flag to indicate that it is this particular assumption that has been withdrawn, and conclude that the hypothesis implies the term so-derived. In each of these rules, the inference over the linear logic term, \formula{G}, corresponds to an operation on the meaning term, via the Curry-Howard Isomorphism between formulas and types \citep{curry;feys58,curry;feys95,howard80}\nocite{degroote95a}. The rule for eliminating the linear implication corresponds to functional application. The rule for introducing the linear implication corresponds to functional abstraction. These rules will be seen in action shortly.
 
 In general, given some head \formula{h} and some arguments of the head
 \formula{a_1, \ldots, a_n}, an implicational term like the following
