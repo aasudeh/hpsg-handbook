@@ -17,7 +17,8 @@
 % \renewcommand{\lsptoprule}{\midrule\toprule}
 % \renewcommand{\lspbottomrule}{\bottomrule\midrule}
 
-\newcommand{\lfgfst}[1]{\textit{#1}\ensuremath{\,}}
+% \newcommand{\lfgfst}[1]{\mbox{\textup{\textit{#1}}}\ensuremath{#1\,}}
+\newcommand{\lfgfst}[1]{\ensuremath{#1\,}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,8 +32,8 @@
 %\newcommand{\trns}[1]{\strut `#1'} % translation in glossed example
 \newcommand{\trnss}[1]{\strut \phantom{\sqz{}} `#1'} % translation in ungrammatical glossed example
 \newcommand{\ttrns}[1]{(`#1')} % an in-text translation of a word
-%\newcommand{\feat}[1]{\mbox{\textsc{\MakeLowercase{#1}}}}     % feature name
-%\newcommand{\val}[1]{\mbox{\textsc{\MakeLowercase{#1}}}}    % f-structure value
+\newcommand{\featt}[1]{\mbox{\textsc{\MakeLowercase{#1}}}}     % feature name
+\newcommand{\vall}[1]{\mbox{\textsc{\textup{\MakeLowercase{#1}}}}}    % f-structure value
 \newcommand{\mg}[1]{\mbox{\textsc{\MakeLowercase{#1}}}}    % morphological gloss
 %\newcommand{\word}[1]{\textit{#1}}       % mention of word
 \providecommand{\kstar}[1]{{#1}\ensuremath{^*}}
@@ -63,11 +64,22 @@
 \providecommand{\xzero}[2][]{#2\ensuremath{^0_{\mbox{\footnotesize\ensuremath{\mathit{#1}}}}}}
 
 \newcommand{\Up}{\ensuremath{\uparrow}}
+\newcommand{\Down}{\ensuremath{\downarrow}}
 \newcommand{\UP}{\Up}
-\newcommand{\down}{\hbox {$\downarrow$\kern .0em}}
-\newcommand{\updown}{\up $=$ \down}
-\newcommand{\Updown}{\up \ensuremath{=} \down}
+\let\up\upashtmp
+\newcommand{\up}{\hbox {$\uparrow$\kern .3em}}
+\newcommand{\down}{\hbox {$\downarrow$\kern .3em}}
+\newcommand{\updown}{\up $=$ \Down}
+\newcommand{\Updown}{\up $=$ \Down} 
+%\newcommand{\Updown}{\up \ensuremath{=} \down}
 
+% Annotated c-structure node
+\newcommand{\csn}[2]{%
+  \begin{tabular}[t]{c}
+    \protect {#1}\\
+    \protect {#2}
+  \end{tabular}
+}
 
 
 \let\leftangle\langle
