@@ -1,4 +1,4 @@
-%% Time-stamp: <2020-05-11 14:16:42 admin>
+%% Time-stamp: <2020-05-12 13:15:30 admin>
 %% -*- coding:utf-8 -*-
 
 % This is the body of the paper. It should compile with latex and xelatex
@@ -8,10 +8,8 @@
 
 
 \mainmatter % Inserted by Ash 2020-05-10 to get arabic page numbers; delete/comment out before sending to Stefan
-\newcommand{\ednote}[1]{#1}
-
-% Forest management
-\forestset{external/readonly}
+% \newcommand{\ednote}[1]{#1}
+\newcommand{\ednote}[1]{}
 
 \begin{document}
 \label{chap-lfg}
@@ -22,7 +20,7 @@
 
 %\if0
 \section{Introduction} 
-Head-Driven Phrase Structure Grammar is similar in many respects to its cousin framework, Lexical Functional Grammar or LFG \citep{BATW2016a,dalrymple;ea19}.  Both  HPSG and LFG are lexicalist frameworks in the sense that they distinguish between the morphological system that creates words, and the syntax proper that combines those fully inflected words into phrases and sentences.  Both frameworks assume a lexical theory of argument structure \citep{MWArgSt} in which verbs and other predicators come equipped with valence structures indicating the kinds of complements and other dependents that the word is to be combined with.  Both theories treat control (equi) and raising as lexical properties of certain control or raising predicates.  Both systems are historically related to unification grammar \citep{Kay84a-u}, but whereas HPSG adopts unification as a declarative constraint on shared structures, LFG captures the effects of unification with declarative descriptions that describe two feature values as equal. Both frameworks use recursively embedded attribute-value matrices; these structures directly model utterances in LFG, but are understood in HPSG as grammatical descriptions satisfied by the directed acyclic graphs that model utterances.  
+Head-Driven Phrase Structure Grammar is similar in many respects to its cousin framework, Lexical Functional Grammar or LFG \citep{BATW2016a,dalrymple;ea19}.  Both  HPSG and LFG are lexicalist frameworks in the sense that they distinguish between the morphological system that creates words, and the syntax proper that combines those fully inflected words into phrases and sentences.  Both frameworks assume a lexical theory of argument structure \citep{MWArgSt} in which verbs and other predicators come equipped with valence structures indicating the kinds of complements and other dependents that the word is to be combined with.  Both theories treat control (equi) and raising as lexical properties of certain control or raising predicates.  Both systems are historically related to unification grammar \citep{Kay84a-u}, but whereas HPSG adopts unification as a declarative constraint on shared structures, LFG captures the effects of unification with declarative descriptions that describe two feature values as equal. Both frameworks use recursively embedded attribute-value matrices; these structures directly model linguistic expressions in LFG, but are understood in HPSG as grammatical descriptions satisfied by the directed acyclic graphs that model utterances.  
 %PREVIOUS VERSION:
 %these are themselves the relevant structures in LFG, but are understood as representations of directed acyclic graphs in HPSG.
 %
@@ -30,12 +28,12 @@ Head-Driven Phrase Structure Grammar is similar in many respects to its cousin f
 Both theories allow phonologically empty nodes of the constituent structure, although researchers in both theories tend to avoid them unless they are well-motivated.   
 
 At the same time, there are interesting differences.  Each theory makes available certain representational resources that the other theory lacks.   LFG has output filters in the form of \textit{constraining equations}, HPSG does not.  HPSG's feature structures are \textit{typed}, those of LFG are not.  The feature descriptions (directed graphs) are fully integrated with the phrase structure grammar in the case of HPSG, while in LFG they are intentionally separated in an autonomous level of representation in the form of a \textit{functional structure} or f-structure.  These differences lead some linguists to feel that certain types of generalization are more perspicuously stated in one framework than the other.   Because LFG's functional structure is autonomous from the constituent structure whose terminal yield gives the order of words in a sentence, that functional structure can instead serve as a representation of the grammatical functions played by various components of a sentence.  
-This makes LFG more amenable to a view of grammatical structure as motivated by its communicative function, and also provides a standard representation language for capturing certain of the more functionally invariant properties of syntax.
+This makes LFG more amenable to a view of grammatical structure as motivated by its communicative function, and also provides a standard representation language for capturing certain of the more functionally invariant properties of syntax.\footnote{For example, researchers in LFG and HPSG alike have been known to compare the behavior of \scare{subjects} in German and Icelandic, but only LFG has a standard representation for subjects that applies to both languages, namely the \textsc{subj} feature.}
 %PREVIOUS VERSION:  This makes LFG more amenable to a functionalist motivation, and also provides a standard representation language for capturing the more cross-linguistically invariant properties of syntax.
-\footnote{For example, researchers in LFG and HPSG alike have been known to compare the behavior of \scare{subjects} in German and Icelandic, but only LFG has a standard representation for subjects that applies to both languages, namely the \textsc{subj} feature.}  Meanwhile, HPSG is more deeply rooted in phrase structure grammar, and thus provides a clearer representation of %the locality conditions that are important for the proper functioning of grammars.
+ Meanwhile, HPSG is more deeply rooted in phrase structure grammar, and thus provides a clearer representation of %the locality conditions that are important for the proper functioning of grammars.
  locality conditions.
 
-This chapter presents a comparison of the two theories with an emphasis on contrasts between the two that arise due to differing design principles.  We start with a look at how those design principles differ (Section \ref{design-sec}), followed by point by point comparisons of syntactic issues organized by grammatical topic.  Then we turn to the semantic system of LFG, beginning with a brief history by way of explaining its motivations (Section \ref{sec:background}), and continuing with a presentation of the semantic theory itself.  A comparison with HPSG semantics is impractical and will not attempted here, but see Chapter \crossrefchaptert{semantics} for an overview of HPSG semantics.  
+This chapter presents a comparison of the two theories with an emphasis on contrasts between the two that arise due to differing design principles.  We start with a look at how those design principles differ (Section \ref{design-sec}), followed by point by point comparisons of syntactic issues organized by grammatical topic.  Then we turn to the semantic system of LFG, beginning with a brief history by way of explaining its motivations (Section \ref{sec:background}), and continuing with a presentation of the semantic theory itself.  A comparison with HPSG semantics is impractical and will not be attempted here, but see Chapter \crossrefchaptert{semantics} for an overview of HPSG semantics.  
 
 \section{Design principles of HPSG and LFG} 
 \label{design-sec}
@@ -49,27 +47,28 @@ Despite that development, it was nonetheless clear that languages for the most p
 
 The architecture of LFG is motivated by rather different concerns:  an interest in typological variation, the search for linguistic universals and a desire to explain the prevailing grammatical patterns found across languages.  For this reason two levels of representation are discerned, a functional structure or \textit{f-structure} representing the internal grammatical relations in a sentence that are largely invariant across languages; and a categorial constituent structure or \textit{c-structure} representing the external morphological and syntactic expression of those relations, which vary, often rather dramatically, across various typological varieties of language.  For example, probably all (or nearly all) languages have subjects and objects, hence those relations are represented in f-structure.  But languages vary as to the mechanisms for signaling subjecthood and objecthood,  the three main mechanisms being word order, head-marking, and dependent-marking \citep{Nichols86a-u}, hence those mechanisms are distinguished at c-structure.    The word \textit{functional} in the name of the LFG framework  is a three-way pun, referring to the grammatical \textit{functions} that play such an important role in the framework, the mathematical \textit{functions} that are the basis for the representational formalism, and the generally \textit{functionalist}-friendly nature of the LFG approach.  
 
-Evidence for these different underlying motivations can be found in the later proposals for further theory development by the principle architects of the respective theories.  In some of his last work before his death, Ivan Sag worked on the development of \isi{Sign-Based Construction Grammar}, a variant of HPSG in which those \isi{locality} conditions are even more deeply built into the representational system \citep{Sag2012a}.  Meanwhile, Joan Bresnan had developed \isi{Optimality-Theoretic LFG} \citep{Bresnan97e}, a framework in which the OT \textit{input} was defined as an underspecified f-structure representing the universal aspects of a syntactic structure, the \textit{candidate set} is the set of external structures mapping to that input, and cross-linguistic variation is modeled with constraint re-rankings.  So while Sag sought to strengthen the locality conditions of the framework, Bresnan sought a more explicit account of universality and variation.  
+Evidence for these different underlying motivations can be found in the later proposals for further theory development by two of the principal architects of the respective theories.  In some of his last work before his death, Ivan Sag worked on the development of \isi{Sign-Based Construction Grammar}, a variant of HPSG in which those \isi{locality} conditions are even more deeply built into the representational system \citep{Sag2012a}.  Meanwhile, Joan Bresnan had developed \isi{Optimality-Theoretic LFG} \citep{Bresnan00-OT}, a framework in which the OT \textit{input} is defined as an underspecified f-structure representing the universal aspects of a syntactic structure, the \textit{candidate set} is the set of external structures mapping to that input, and cross-linguistic variation is modeled with constraint re-rankings.  So while Sag sought to strengthen the locality conditions of the framework, Bresnan sought a more explicit account of universality and variation.  
 
-In the remainder of this chapter we will survey various syntactic and semantic phenomena, showing how the  approaches of the different frameworks reflect those differing design motivations.  
+In the remainder of this chapter we will survey various phenomena, showing how the  approaches of the different frameworks reflect those differing design motivations.  
 
 \section{Phrases and endocentricity} 
 A phrasal node shares certain grammatical features with specific daughters. %such as the \textsc{head} features that it shares with the head daughter.  
 In HPSG this is accomplished
 by means of structure-sharing (reentrancies) in the immediate dominance schemata and other 
-constraints on local sub-trees such as the \isi{Head Feature Principle}.  LFG employs essentially the same mechanism for feature sharing in a local sub-tree but implements it slightly differently, so as to better address the design motivations of LFG.  Each node in a phrase structure is paired with a so-called functional structure or \textit{f-structure}, which is formally a set of attribute-value pairs.  It is through the f-structure that the nodes of the phrase structure share features.   The phrase structure is referred to as \textit{c-structure}, for categorial or constituent structure, in order to distinguish it from f-structure. 
+constraints on local sub-trees such as the \isi{Head Feature Principle}.  LFG employs essentially the same mechanism for feature sharing in a local sub-tree but implements it slightly differently, so as to better address the design motivations of the theory.  Each node in a phrase structure is paired with an f-structure, which is formally a set of attribute-value pairs.  It is through the f-structure that the nodes of the phrase structure share features.   The phrase structure is referred to as \textit{c-structure}, for categorial or constituent structure, in order to distinguish it from f-structure. 
 %Context-free phrase structure rules  license c-structures, but the c-structure elements are annotated with \term{functional descriptions} (\term{f-descriptions}), which describe the corresponding f-structure. 
 Context-free phrase structure rules  license c-structures, and the c-structure elements are annotated with \term{functional equations} which describe the corresponding f-structure.  
-The correspondence function from c-structures to f-structures, $\phi$, defines and constrains the f-structure on the basis of the collection of equations collected from the c-structure annotations and from lexical entries of the terminal nodes.\footnote{Taken together the set of equations in a c-structure is called the functional description or \term{f-description}.}  For example, the phrase structure grammar in (\ref{psg}) and lexicon in (\ref{lex}) generate the tree in Figure~\ref{fig-tree1}.\footnote{In (\ref{lex}c) the verb is broken down into the root \textit{rule} and third person singular suffix \textit{-s} to show the functional equations contributed by each morpheme.  However, LFG does not require that words be analyzed into morphemes.  It is compatible with morpheme-based or realizational morphology or any other theory of morphology that associates word forms with grammatical features.}$^,$\footnote{For simplicity's sake, in this basic example we assume an NP analysis rather than a DP one \citep{Brame82a-u}. However, much recent LFG work assumes DP; see \citet{BATW2016a} and \citet{dalrymple;ea19} for further discussion.}
+The correspondence function from c-structures to f-structures, $\phi$, defines and constrains the f-structure on the basis of the  equations collected from the c-structure annotations and from lexical entries of the terminal nodes.\footnote{Taken together the set of equations in a c-structure is called the functional description or \term{f-description}.}  For example, the phrase structure grammar in (\ref{psg}) and lexicon in (\ref{lex}) generate the tree in Figure~\ref{fig-tree1}.\footnote{In (\ref{lex}c) the verb is broken down into the root \textit{roar} and third person singular suffix \textit{-s} to show the functional equations contributed by each morpheme.  However, LFG does not require that words be analyzed into morphemes.  It is compatible with morpheme-based or realizational morphology or any other theory of morphology that associates word forms with grammatical features.}$^,$\footnote{For simplicity's sake, in this basic example we assume an NP analysis rather than a DP one \citep{Brame82a-u}. However, much recent LFG work assumes DP; see \citet{BATW2016a} and \citet{dalrymple;ea19} for further discussion.}
 
+% This works now, with tikzexternalize commented out in lfg.tex; Ash 20200511
 % \begin{forest}
 % sm edges 
 % [S 
-%  [NP %$f_1$
+%  [$f_1$
 %    [Det [those]]
 %    [N   [lions]]]
 %  [VP
-%    [V   [rule]]]]
+%    [V   [roar]]]]
 % \end{forest}
 
 \eal  \label{psg}
@@ -109,76 +108,77 @@ The correspondence function from c-structures to f-structures, $\phi$, defines a
 \ex 
 
 {\label{indent}
-\makebox[4em][l]{{\it rule}\/: V}\qquad\feqs{(\up \feat{pred}) $=$ \predvall{rule$\leftangle
+  \begin{tabular}[t]{@{}l@{}}
+\makebox[4em][l]{{\it roar}\/: V}\qquad\feqs{(\up \feat{pred}) $=$ \predvall{roar$\leftangle
 (\up \feat{subj})\rightangle$}}
-
+\\
 \makebox[4em][l]{-{\it s}\/: {\it infl}\/\pslabel{v}}\qquad\feqs{(\up \feat{tense}) = \feat{pres}\\
                   (\up \feat{subj}) $=$ \down\\
                   \qquad(\down \feat{pers}) $=$ 3\\
-                  \qquad(\down \feat{num}) $=$ \feat{sg}}}
-
-
+                  \qquad(\down \feat{num}) $=$ \feat{sg}}
+  \end{tabular}
+  }
 \zl
 
 
 
 \begin{figure}
-  \ednote{WE NEED THE TREE BELOW THIS POINT IN THE .TEX FILE, BUT I HAD TO COMMENT IT OUT TO GET THE THING TO COMPILE!}
-  % \begin{forest}
-% sm edges without translation
-% [S 
-%  [\csn{(\up\feat{subj}) $=$ \down}{DP}
-%   [\csn{\updown}{Det} [this\\
-%                          {(\up \feat{num}) $=$ \feat{sg}}\\
-%                          {(\up \feat{prox}) $=$ \feat{+}}]]
-%   [\csn{\updown}{N}   [lion\\
-%                          {(\up \feat{pred}) $=$ `lion'}\\
-%                          {(\up \feat{num}) $=$ \feat{plur}}]]]
-%   [\csn{\updown}{VP}
-%             [\csn{\updown}{V} [rule-s\\ 
-%                               {(\up \feat{pred}) $=$ `rule$\langle\feat{subj}\rangle$'}\\
-%                               {(\up \feat{tense}) = \feat{pres}}\\
-%                               {(\up \feat{subj}) = \down}\\
-%                               {(\down \feat{pers}) = 3}\\
-%                               {(\down \feat{num}) = \feat{sg}} ]]]]
-% \end{forest}
+  % \ednote{WE NEED THE TREE BELOW THIS POINT IN THE .TEX FILE, BUT I HAD TO COMMENT IT OUT TO GET THE THING TO COMPILE!}
+  \begin{forest}
+sm edges without translation
+[S 
+ [\csn{(\up\feat{subj}) $=$ \down}{NP}
+  [\csn{\updown}{Det} [this\\
+                         {(\up \feat{num}) $=$ \feat{sg}}\\
+                         {(\up \feat{prox}) $=$ \feat{+}}]]
+  [\csn{\updown}{N}   [lion\\
+                         {(\up \feat{pred}) $=$ `lion'}\\
+                         {(\up \feat{num}) $=$ \feat{sg}}]]]
+  [\csn{\updown}{VP}
+            [\csn{\updown}{V} [roars\\ 
+                              {(\up \feat{pred}) $=$ `roar$\langle(\up \feat{subj})\rangle$'}\\
+                              {(\up \feat{tense}) $=$ \feat{pres}}\\
+                              {(\up \feat{subj}) $=$ \down}\\
+                              {(\down \feat{pers}) $=$ 3}\\
+                              {(\down \feat{num}) $=$ \feat{sg}} ]]]]
+\end{forest}
 \caption{C-structure in LFG}\label{fig-tree1}
 \end{figure}
 
 \noindent
-Each node in the c-structure maps to an f-structure, that is, to a set of attribute-value pairs.  Within the equations, the up and down arrows are metavariables over f-structure labels, interpreted as follows:  the up arrow refers to the f-structure to which the c-structure mother node maps, and the down arrow refers to the function that its own c-structure node maps to.  To derive the f-structure from (\ref{fig-tree1}), we instantiate the metavariables to specific function names and solve for the f-structure associated with the root node (here, S).  In Figure~\ref{fig-tree2}, the f-structure labels \textit{f1, f2,} etc. are subscripted to the node labels.  The arrows have been replaced with those labels.  
+Each node in the c-structure maps to an f-structure, that is, to a set of attribute-value pairs.  Within the equations, the up and down arrows are metavariables over f-structure labels, interpreted as follows:  the up arrow refers to the f-struc\-ture to which the c-structure mother node maps, and the down arrow refers to the f-structure that its own c-structure node maps to.  To derive the f-structure from (\ref{fig-tree1}), we instantiate the metavariables to specific function names and solve for the f-structure associated with the root node (here, S).  In Figure~\ref{fig-tree2}, the f-structure labels \textit{f1, f2,} etc. are subscripted to the node labels.  The arrows have been replaced with those labels.  
 
 \begin{figure}
   \ednote{WE NEED THE TREE BELOW THIS POINT IN THE .TEX FILE, BUT I HAD TO COMMENT IT OUT TO GET THE THING TO COMPILE!}
-% \begin{forest}
-% sm edges without translation
-% [S$_{f1}$ 
-%   [\csn{(\ensuremath{f1} \feat{subj}) $=$ \ensuremath{f2}}{DP$_{f2}$}
-%     [\csn{\ensuremath{f2\ =\ f4}}{Det$_{f4}$} [this$_{f7}$\\
-%                          {(\ensuremath{f4} \feat{num}) $=$ \feat{sg}}\\
-%                          {(\ensuremath{f4} \feat{prox}) $=$ \feat{+}}]]
-%     [\csn{\ensuremath{f2\ =\ f5}}{N$_{f5}$}   [lion$_{f8}$\\
-%                          {(f5 \feat{pred}) $=$ \predvall{lion}}\\
-%                          {(f5 \feat{num}) $=$ \feat{sg}}]]]
-%   [\csn{\ensuremath{f1 = f3}}{VP$_{f3}$}
-%     [\csn{\ensuremath{f3 = f6}}{V$_{f6}$}   [rules$_{f9}$\\
-%                          {(\ensuremath{f6} \feat{pred}) $=$ `rule$\langle (\up \feat{subj})  \rangle $'}
-%                          \\ {(\ensuremath{f6}\ \feat{tense}) = \feat{pres}}\\
-%                   {(\ensuremath{f6}\ \feat{subj}) = \ensuremath{f9}}\\
-%                  {(\ensuremath{f9}\ \feat{pers}) = 3}\\
-%                   {(\ensuremath{f9}\ \feat{num}) = \feat{sg}} ]]]]
-% \end{forest}
+\begin{forest}
+sm edges without translation
+[S$_{f_1}$ 
+  [\csn{(\ensuremath{f_1} \feat{subj}) $=$ \ensuremath{f_2}}{NP$_{f_2}$}
+    [\csn{\ensuremath{f_2\ =\ f_4}}{Det$_{f_4}$} [this$_{f_7}$\\
+                         {(\ensuremath{f_4} \feat{num}) $=$ \feat{sg}}\\
+                         {(\ensuremath{f_4} \feat{prox}) $=$ \feat{+}}]]
+    [\csn{\ensuremath{f_2\ =\ f_5}}{N$_{f_5}$}   [lion$_{f_8}$\\
+                         {(\ensuremath{f_5} \feat{pred}) $=$ \predvall{lion}}\\
+                         {(\ensuremath{f_5} \feat{num}) $=$ \feat{sg}}]]]
+  [\csn{\ensuremath{f_1 =\ f_3}}{VP$_{f_3}$}
+    [\csn{\ensuremath{f_3 =\ f_6}}{V$_{f_6}$}   [roars$_{f_9}$\\
+                         {(\ensuremath{f_6} \feat{pred}) $=$ `roar$\langle (\up \feat{subj})  \rangle $'}
+                         \\ {(\ensuremath{f_6}\ \feat{tense}) $=$ \feat{pres}}\\
+                  {(\ensuremath{f_6}\ \feat{subj}) $=$ \ensuremath{f9}}\\
+                 {(\ensuremath{f_9}\ \feat{pers}) $=$ 3}\\
+                  {(\ensuremath{f_9}\ \feat{num}) $=$ \feat{sg}} ]]]]
+\end{forest}
 \caption{Deriving the f-description}\label{fig-tree2}
 \end{figure}
 
-Collecting all the equations from this tree and solving for \textit{f1}, we arrive at the f-structure in (\ref{fs1}):
+Collecting all the equations from this tree and solving for \ensuremath{f_1}, we arrive at the f-structure in (\ref{fs1}):
 
 \ea		
 \label{fs1} 
 {\avmoptions{center}
 \begin{avm}
-\lfgfst{f}\[ subj &  \[ pred & \predvall{lion} \\ num & \vall{sg} \\ pers & \vall{3} \\ prox & $+$ \] \\
-pred & \predvall{rule$\langle (f \feat{subj}) \rangle $} \\
+\lfgfst{f_1}\[ subj &  \[ pred & \predvall{lion} \\ num & \vall{sg} \\ pers & \vall{3} \\ prox & $+$ \] \\
+pred & \predvall{roar$\langle (f_1\, \feat{subj}) \rangle $} \\
 tense & \vall{pres} \]
 \end{avm}
 }
@@ -203,11 +203,30 @@ By way of illustration, let \textsc{fs} (for \textit{f-structure}) be an HPSG at
 \noindent
 Let us compare the two representations with respect to heads and dependents.
 
-Taking heads first, the VP node annotated with \updown{} is an \textit{f-structure head}, meaning that the features of the VP are identified with those of the mother S.  This effect is equivalent to the tag\ \ibox{1}\ in (\ref{psg2}b).    Hence  \updown{} has an effect similar to HPSG's Head Feature Principle.  However, in LFG the part of speech categories and their projections such as N, V, Det, NP, VP, DP, etc. belong to the c-structure and not the f-structure.  As a consequence those features are not subject to sharing, and any principled correlations between such categories, such as the fact that N is the head of NP, V the head of VP, C the head of CP, and so on, are instead captured in an explicit version of (extended) X-bar theory applying exclusively to the c-structure \citep{grimshaw98}.  The version of extended X-bar theory in \citet[Chapter 6]{BATW2016a} assumes that all nodes on the right side of the arrow of the phrase structure rule are optional, with many unacceptable partial structures ruled out in the f-structure instead.  Also not all structures need to be endocentric (i.e., not all structures have a head daughter in c-structure).  The LFG category S shown in (\ref{psg2}a) is inherently exocentric, lacking a  c-structure head whose c-structure category could influence its external syntax (the f-structure head of S is the daughter with the \updown{} annotation, here the VP).   (English is also assumed to have endocentric clauses of category IP, where an auxiliary verb of category I (for Inflection) serves as the c-structure head.)  S is used for copulaless clauses and also for the flat structures of non-configurational clauses in languages such as \ili{Warlpiri}.   
+Taking heads first, the VP node annotated with \updown{} is an \textit{f-structure head}, meaning that the features of the VP are identified with those of the mother S.  This effect is equivalent to the tag\ \ibox{1}\ in (\ref{psg2}b).    Hence  \updown{} has an effect similar to HPSG's Head Feature Principle.  However, in LFG the part of speech categories and their projections such as N, V, Det, NP, VP, DP, etc. belong to the c-structure and not the f-structure.  As a consequence those features are not subject to sharing, and any principled correlations between such categories, such as the fact that N is the head of NP, V the head of VP, C the head of CP, and so on, are instead captured in an explicit version of (extended) X-bar theory applying exclusively to the c-structure \citep{grimshaw98}.  The version of extended X-bar theory in \citet[Chapter 6]{BATW2016a} assumes that all nodes on the right side of the arrow of the phrase structure rule are optional, with many unacceptable partial structures ruled out in the f-structure instead.  Also not all structures need to be endocentric (i.e., not all structures have a head daughter in c-structure).  The LFG category S shown in (\ref{psg2}a) is inherently exocentric, lacking a  c-structure head whose c-structure category could influence its external syntax (the f-structure head of S is the daughter with the \updown{} annotation, here the VP).   (English is also assumed to have endocentric clauses of category IP, where an auxiliary verb of category I (for Inflection) serves as the c-structure head.)  S is used for copulaless clauses and also for the flat structures of non-configurational clauses in languages such as \ili{Warlpiri} (see Section~\ref{nonconfig-sec} below).   
 
-Functional projections like DP, IP, and CP are typically assumed to form a ``shell'' over the lexical projections NP, VP, AP, and PP (plus CP can appear over S).  While this assumption is widespread in transformational approaches, its origins can be found in nontransformational  research, including early LFG:  CP was proposed in Fassi-Fehri's (1981, 141ff) \nocite{fassifehri81} LFG treatment of Arabic; IP (the idea of the sentence as functional projection) is found in Falk's (1983) \nocite{Falk83a-u} LFG analysis of the English auxiliary system (Falk called it `MP' instead of `IP'); and the DP originated in the nontransformational work of \citet{Brame82a-u}.\footnote{For more on the origins of extended projections see \citet[124--5]{BATW2016a}.}  
+Functional projections like DP, IP, and CP are typically assumed to form a ``shell'' over the lexical projections NP, VP, AP, and PP (plus CP can appear over S).  While this assumption is widespread in transformational approaches, its origins can be found in nontransformational  research, including early LFG:  CP was proposed in \citeauthor{fassifehri81}'s \citeyearpar[141ff.]{fassifehri81} \nocite{fassifehri81} LFG treatment of Arabic; IP (the idea of the sentence as functional projection) is found in \citeauthor{Falk83a-u}'s \citeyearpar{Falk83a-u}  \nocite{Falk83a-u} LFG analysis of the English auxiliary system (Falk called it `MP' instead of `IP'); and the DP originated in the nontransformational work of \citet{Brame82a-u}.\footnote{For more on the origins of extended projections see \citet[124--5]{BATW2016a}.}  
 
-Extended projections are formally implemented in LFG by having the functional head (such as D) and its lexical complement (such as NP) be f-structure co-heads.  See for example the NP \textit{that lion} in (\ref{fig-tree1}), where Det and N are both annotated with \Updown.  The NP, Det, and N nodes all map to the same f-structure, namely the subsidiary structure serving as the value of \textsc{subj} in (\ref{fs1}).  What makes this identity possible is that function words lack a \textsc{pred} feature that would otherwise indicate a semantic form.\footnote{The attribute \feat{pred} ostensibly stands for \qterm{predicate}, but really it means something more like \scare{semantically contentful}, as there are lexical items, such as proper names, which have \feat{pred} features but are not predicates under standard assumptions.}  Content words such as \textit{lion} have such a feature ([\feat{pred} \predvall{lion}]), and so if the Det had one as well then they would clash in the f-structure.  Note more generally that the f-structure flattens out much of the hierarchical structure of the corresponding c-structure.  
+Extended projections are formally implemented in LFG by having the functional head (such as D) and its lexical complement (such as NP) be f-structure co-heads.  See for example the DP \textit{this lion} in Figure~\ref{dp-tree}, where D, NP and N are all annotated with \Updown\, hence the DP, D, NP, and N nodes all map to the same f-structure.  What makes this identity possible is that function words lack a \textsc{pred} feature that would otherwise indicate a semantic form.\footnote{The attribute \feat{pred} ostensibly stands for \qterm{predicate}, but really it means something more like \scare{semantic content}, as there are lexical items, such as proper names, which have \feat{pred} features but are not predicates under standard assumptions.}  Content words such as \textit{lion} have such a feature ([\feat{pred} \predvall{lion}]), and so if the D had one as well then they would clash in the f-structure.  Note more generally that the f-structure flattens out much of the hierarchical structure of the corresponding c-structure. 
+
+\begin{figure}
+ \begin{center}
+  \begin{forest}
+sm edges without translation
+[DP 
+ [\csn{\updown}{D}
+   [this\\
+                         {(\up \feat{num}) $=$ \feat{sg}}\\
+                         {(\up \feat{prox}) $=$ \feat{+}} ] ]
+  [\csn{\updown}{NP}   
+    [\csn{\updown}{N}  
+       [lion\\
+                         {(\up \feat{pred}) $=$ `lion'}\\
+                         {(\up \feat{num}) $=$ \feat{sg}} ] ] ]  ]
+\end{forest}
+ \end{center}
+\caption{Functional heads in LFG}\label{dp-tree}
+\end{figure}
 
 Complementation works a little differently in LFG from HPSG.  Note that the LFG  rule (\ref{psg2}a) indicates the \feat{subj} grammatical function on the subject NP node, while the pseudo-HPSG rule (\ref{psg2}b) indicates the \feat{subj} function on the VP functor selecting the subject.   A consequence of the use of functional equations in LFG is that a grammatical relation such as \feat{subj} can be locally associated with its formal exponents, whether a configurational position in phrase structure (as in (\ref{fig-tree1})), head-marking (agreement, see (\ref{indent})), or dependent marking (case).  A subject-marking case affix such as a nominative inflection can introduce a so-called \qterm{inside-out} functional designator, (\feat{subj} \Up),
  which requires that the f-structure of the NP or DP bearing that case ending be the value of a \feat{subj} attribute \citep{Nordlinger98a-u}.\footnote{Inside-out designators can be identified by their special syntax: the attribute symbol (here \feat{subj}) precedes instead of following the function symbol (here the metavariable $\uparrow$).  
@@ -230,7 +249,7 @@ does not represent the subject grammatical function in the LFG sense, but is ins
 
 This illustrates once again LFG's orientation towards cross-linguistic grammar comparison.  HPSG practitioners can still formulate theories of \qterm{subjects}, comparing subjects in English, German, Icelandic, and so on, but there is no formal correlate of the notion \qterm{subject} in HPSG formalism comparable to LFG's \textsc{subj} feature.  Meanwhile from the perspective of a single grammar the original motivation for adopting grammatical functions, in reaction to the pan-phrase-structural view of the transformational approach, informed both LFG and HPSG in the same way.  
 
-In LFG a lexical predicator such as a verb selects its complements via grammatical functions, which are native to f-structure, rather than using c-structure categories.  A transitive verb selects a \textsc{subj} and \textsc{obj}, which are features of f-structure, but it cannot select for the category DP because such part of speech categories belong only to c-structure.  For example the verb stem \textit{rule} in (\ref{lex}c) has a \textsc{pred} feature whose value contains (\up \feat{subj}), which has the effect of requiring a \textsc{subj} function in the f-structure.    The f-structure (shown in (\ref{fs1})) is built using the defining equations, as described above.  Then that f-structure is checked against any \textit{existential constraints} such as  the expression (\up \feat{subj}), which requires that the f-structure contain a SUBJ feature.  That constraint is satisfied, as shown in (\ref{fs1}).  Moreover, the fact that (\up \feat{subj}) appears in the angled brackets means that it expresses a semantic role of the \predvall{rule} relation, hence the \textsc{subj} value is required to contain a \textsc{pred} feature, which is satisfied by the feature [\textsc{pred} \predvall{lion}] in  (\ref{fs1}).  
+In LFG a lexical predicator such as a verb selects its complements via grammatical functions, which are native to f-structure, rather than using c-structure categories.  A transitive verb selects a \textsc{subj} and \textsc{obj}, which are features of f-structure, but it cannot select for the category DP because such part of speech categories belong only to c-structure.  For example the verb stem \textit{roar} in (\ref{lex}c) has a \textsc{pred} feature whose value contains (\up \feat{subj}), which has the effect of requiring a \textsc{subj} function in the f-structure.    The f-structure (shown in (\ref{fs1})) is built using the defining equations, as described above.  Then that f-structure is checked against any \textit{existential constraints} such as  the expression (\up \feat{subj}), which requires that the f-structure contain a SUBJ feature.  That constraint is satisfied, as shown in (\ref{fs1}).  Moreover, the fact that (\up \feat{subj}) appears in the angled brackets means that it expresses a semantic role of the \predvall{roar} relation, hence the \textsc{subj} value is required to contain a \textsc{pred} feature, which is satisfied by the feature [\textsc{pred} \predvall{lion}] in  (\ref{fs1}).  
 
 
 
@@ -247,7 +266,7 @@ Selection for grammatical relations instead of formal categories enables LFG to 
 \ex[*]{We talked about that he was sick for days.}
 
 \zl
-The variant of \textit{talk} taking an \textit{about}-PP selects neither a DP nor a CP \textit{per se}, but rather selects the attribute string  \featt{OBL}$_{about}$ \featt{OBJ}, describing the path to the f-structure for the object of the preposition \textit{about}.\footnote{Following \citet[300]{BATW2016a},  this analysis assumes that the preposition \textit{about} does not introduce a semantic predicate (\textsc{pred}) feature, so it lacks its own argument structure and instead serves as a marker of an argument of the verb, functioning much like an oblique case marker.}
+The variant of \textit{talk} taking an \textit{about}-PP selects neither a DP nor a CP \textit{per se}, but rather selects the attribute string  \featt{OBL}$_{about}$ \featt{OBJ}, describing the path to the f-structure for the object of the preposition \textit{about}.\footnote{Following \citet[300]{BATW2016a},  this analysis assumes that the preposition \textit{about} does not introduce a  \feat{pred} feature, so it lacks its own argument structure and instead serves as a marker of an argument of the verb, functioning much like an oblique case marker.}
 
 \eal \label{talk-about}
 {{\it talk}\/: V}\qquad\feqs{(\up \feat{pred}) = `talk-about$\leftangle
@@ -286,7 +305,7 @@ Non-transformational frameworks like HPSG and LFG offer two alternative approach
 
 The second approach is closer in spirit to the head movement posited in transformational grammar.  It is found in both HPSG and LFG but the formal implementation is rather different in the two frameworks.  The HPSG `head movement' account due to \citet{Borsley89} posits a phonologically empty element that can function as the verb in its canonical position (such as \ref{mad}a), and that empty element is structure-shared with the verb that is fronted.  This treats the variation in head position similarly to non-local dependencies involving phrases.  See \crossrefchaptert{order}, Section 5.1 `Head movement approaches'. 
 
-The LFG version of `head movement' takes advantage of  the separation of autonomous c- and f-structures.  Recall from the above discussion of the DP in Figure~\ref{fig-tree1} that functional heads such as determiners, auxiliaries and complementizers do not introduce new f-structures, but rather map to the same f-structure as their complement phrases.   The finite auxiliary can therefore appear in either the I or C position without this difference in position affecting the f-structure, as we will see presently.  Recall also that c-structure nodes are optional and can be omitted as long as a well-formed f-structure is generated.  Comparing the non-terminal structures of Figure~\ref{fig-tree3} and Figure~\ref{fig-tree4}, the I preterminal node is omitted from the latter structure but otherwise they are identical.   
+The LFG version of `head movement' takes advantage of  the separation of autonomous c- and f-structures.  Recall from the above discussion of the DP in Figure~\ref{dp-tree} that functional heads such as determiners, auxiliaries and complementizers do not introduce new f-structures, but rather map to the same f-structure as their complement phrases.   The finite auxiliary can therefore appear in either the I or C position without this difference in position affecting the f-structure, as we will see presently.  Recall also that c-structure nodes are optional and can be omitted as long as a well-formed f-structure is generated.  Comparing the non-terminal structures of Figure~\ref{fig-tree3} and Figure~\ref{fig-tree4}, the I preterminal node is omitted from the latter structure but otherwise they are identical.   
 
 \begin{figure}
   \ednote{THE SAME UP ARROW SPACING ISSUES ARE PRESENT HERE, BUT AT LEAST IT COMPILES!} \begin{forest}
@@ -296,7 +315,7 @@ sm edges without translation
  {(\up \feat{fin}) $=$ +}]]
 [\csn{\updown}{IP} 
   [\csn{(\up\feat{subj}) $=$ \down}{DP} [she\\
-      {(\up \feat{pred}) $=$ `\textsc{pro}'}\\ 
+      {(\up \feat{pred}) $=$ `{pro}'}\\ 
       {(\up \feat{pers}) $=$ 3}\\
       {(\up \feat{num}) $=$ \feat{sg}}\\
       {(\up \feat{gend}) $=$ \feat{fem}} ]]
@@ -336,8 +355,8 @@ The lexical equations in Figure~\ref{fig-tree4} are the same as the ones in Figu
 \label{fs2} 
 {\avmoptions{center}
 \begin{avm}
-\lfgfst{f}\[ subj &  \[ pred & \predvall{feat{pro}} \\ num & \vall{sg} \\ pers & \vall{3} \\ gend & \vall{fem} \] \\
-pred & \predvall{mad$\langle (f \feat{subj}) \rangle $} \\
+\lfgfst{f}\[ subj &  \[ pred & \predvall{{pro}} \\ num & \vall{sg} \\ pers & \vall{3} \\ gend & \vall{fem} \] \\
+pred & \predvall{mad$\langle (f\, \feat{subj}) \rangle $} \\
 fin & $+$ \]
 \end{avm}
 }
@@ -345,7 +364,7 @@ fin & $+$ \]
 The C and I positions are appropriate for markers of clausal grammatical features such as finiteness ([\textsc{fin} \textpm]), encoded either by auxiliary verbs like finite \textit{is} or complementizers like finite \textit{that} and infinitival \textit{for}: \textit{I said that/*for she is present} vs. \textit{I asked for/*that her to be present}.  English has a specialized class of  auxiliary verbs for marking finiteness from the C position, while in languages like German all finite verbs, including main verbs, can appear in a C position that is unoccupied by a lexical complementizer.  
 Summarizing, the LFG framework enables a theory of head mobility based on the intuition that a clause has multiple head positions where inflectional features of the clause are encoded.  
 
-\section{Case, agreement, and constraining equations} 
+\section{Agreement, case, and constraining equations} 
 The basic theory of agreement is the same in LFG and HPSG (see \crossrefchapteralt{agreement}):  agreement occurs when 
 multiple feature sets
  arising from distinct elements of a sentence specify information about a single abstract object, so that the information must be mutually consistent \citep{Kay84a-u}.  
@@ -357,35 +376,38 @@ The basic mechanism for case marking works in essentially the same way as agreem
  \label{case}
 \ex She/*Her/*You rules.
 \ex {\makebox[4em][l]{{\it she}\/: {D}}\qquad\feqs{
-				(\up \feat{case}) = \feat{nom}\\
-                  (\up \feat{pers}) = 3\\
-                  (\up \feat{num}) = \feat{sg}\\ 
-                  (\up \feat{gend}) = \feat{fem}} }
+    (\up \feat{pred}) $=$ \predvall{pro}\\     
+    (\up \feat{case}) $=$ \feat{nom}\\
+    (\up \feat{pers}) $=$ 3\\
+    (\up \feat{num}) $=$ \feat{sg}\\ 
+    (\up \feat{gend}) $=$ \feat{fem}} }
 \ex {\makebox[4em][l]{{\it her}\/: {D}}\qquad\feqs{
-				(\up \feat{case}) = \feat{acc}\\
-                  (\up \feat{pers}) = 3\\
-                  (\up \feat{num}) = \feat{sg} \\
-                  (\up \feat{gend}) = \feat{fem}}}
+        (\up \feat{pred}) $=$ \predvall{pro}\\     
+				(\up \feat{case}) $=$ \feat{acc}\\
+                  (\up \feat{pers}) $=$ 3\\
+                  (\up \feat{num}) $=$ \feat{sg} \\
+                  (\up \feat{gend}) $=$ \feat{fem}}}
 \ex {\makebox[4em][l]{-{\it s}\/: {\it infl}}\qquad\feqs{
 				(\up \feat{tense}) = \feat{pres}\\
-                  (\up \feat{subj}) = \down\\
-                  \qquad(\down\ \feat{pers}) = 3\\
-                  \qquad(\down\ \feat{num}) = \feat{sg}\\
-                  \qquad(\down\ \case) = \feat{nom} }}
+                  (\up \feat{subj}) $=$ \down\\
+                  \qquad(\down\ \feat{pers}) $=$ 3\\
+                  \qquad(\down\ \feat{num}) $=$ \feat{sg}\\
+                  \qquad(\down\ \case) $=$ \feat{nom} }}
  \zl
 The variant of (\ref{case}a) with \textit{her} as subject is ruled out due to a clash of \feat{case}  within the \subj{}  f-structure.  The variant with \textit{you} as subject is ruled out due to a clash of \feat{pers} features.  This mechanism is essentially the same as in HPSG, where it operates via the subject valence feature.  
 
-This account allows for underspecification of both the case assigner and the case bearing element, and of both the controller and target of agreement.   In  English, for example, gender is marked on some pronouns but not on a verbal affix; and (nominative) case is marked on the verbal affix but not on  nominals, with the exception of the pronouns.  But certain case and agreement phenomena do not tolerate underspecification, and for those phenomena LFG offers an account using a \textit{constraining equation}, a mechanism absent from HPSG and indeed ruled out by current foundational assumptions of HPSG theory.  (Some early precursors to HPSG included a special feature value called \feat{any} that functioned much like an LFG constraining equation \citep[36-37]{Shieber86a}, but that device has been eliminated from HPSG.)  The functional equations described so far in this chapter function by building the f-structure, as illustrated in (\ref{fig-tree1}) and (\ref{fs1}) above; such equations are called \textit{defining equations}.  A constraining equation has the same syntax as a defining equation, but it functions by checking the completed f-structure for the presence of a feature.  An f-structure lacking the feature designated by the constraining equation is ill-formed.  
+This account allows for underspecification of both the case assigner and the case-bearing element, and of both the controller and target of agreement.   In  English, for example, gender is marked on some pronouns but not on a verbal affix; and (nominative) case is marked on the verbal affix but not on  nominals, with the exception of the pronouns.  But certain case and agreement phenomena do not tolerate underspecification, and for those phenomena LFG offers an account using a \textit{constraining equation}, a mechanism absent from HPSG and indeed ruled out by current foundational assumptions of HPSG theory.  (Some early precursors to HPSG included a special feature value called \feat{any} that functioned much like an LFG constraining equation \citep[36-37]{Shieber86a}, but that device has been eliminated from HPSG.)  The functional equations described so far in this chapter function by building the f-structure, as illustrated in (\ref{fig-tree1}) and (\ref{fs1}) above; such equations are called \textit{defining equations}.  A constraining equation has the same syntax as a defining equation, but it functions by checking the completed f-structure for the presence of a feature.  An f-structure lacking the feature designated by the constraining equation is ill-formed.  
 
 The following lexical entry for \textit{she} is identical to the one in (\ref{case}b) above, except that the \feat{case} equation has been replaced with a constraining equation, notated with $=_c$.  
 
 \ea
 \label{constrain}
-{\makebox[4em][l]{{\it she}\/: {\it Pron}}\qquad\feqs{
+{\makebox[4em][l]{{\it she}\/: {D}}\qquad\feqs{
+    (\up \feat{pred}) $=$ \predvall{pro}\\
 				(\up \feat{case}) $=_c$ \feat{nom}\\
-                  (\up \feat{pers}) = 3\\
-                  (\up \feat{num}) = \feat{sg}\\ 
-                  (\up \feat{gend}) = \feat{fem}} }
+                  (\up \feat{pers}) $=$  3\\
+                  (\up \feat{num}) $=$  \feat{sg}\\ 
+                  (\up \feat{gend}) $=$  \feat{fem}} }
 \z
 The f-structure is built from the defining equations, after which the \subj{} field is checked for the presence of the [\feat{case} \feat{nom}] feature, as indicated by the constraining equation.  If this feature has been contributed by the finite verb, as in (\ref{case}), then the sentence is predicted to be grammatical; if there is no finite verb (and there is no other source of nominative case) then it is ruled out.  This predicts the following grammaticality pattern:
 
@@ -455,8 +477,8 @@ Any item in dative form within the NP, such as \textit{ovom} or \textit{studentu
 
 \section{Agreement and affixal pronouns}
 
-Agreement inflections that include the person feature derive historically from incorporated pronominal affixes.  Distinguishing between agreement markers and affixal pronouns can be a subtle and controversial matter.  LFG provides a particular formal device for representing this distinction within the f-structure:  a true pronoun, whether affixal or free, introduces a semantic form (formally a \textsc{pred} feature) with the value `\feat{pro}', while an agreement inflection does not.  
-For example, \citet{bresnan+mchombo:1987} argue that the \ili{Chiche\^{w}a} (Bantu) object marker (OM) is an incorporated pronoun, while the subject marker (SM) alternates between agreement and incorporated pronoun, as in this example: 
+Agreement inflections that include the person feature derive historically from incorporated pronominal affixes.  Distinguishing between agreement markers and affixal pronouns can be a subtle and controversial matter.  LFG provides a particular formal device for representing this distinction within the f-structure:  a true pronoun, whether affixal or free, introduces a semantic form (formally a \textsc{pred} feature) with the value `{pro}', while an agreement inflection does not.  
+For example, \citet{bresnan+mchombo:1987} argue that the \ili{Chiche\^{w}a} (Bantu) object marker (\featt{OM}) is an incorporated pronoun, while the subject marker (\featt{SM}) alternates between agreement and incorporated pronoun, as in this example: 
 
 
  \begin{exe} 
@@ -467,27 +489,27 @@ For example, \citet{bresnan+mchombo:1987} argue that the \ili{Chiche\^{w}a} (Ban
 \end{exe}
 
 \noindent
-According to \citet{bresnan+mchombo:1987}  the class 2 object marker \textit{w\'{a}-} is a pronoun, so the phrase \textit{alenje} `the hunters' is not the true object but rather a postposed topic cataphorically linked to the object marker, with which it agrees in noun class (a case of \textit{anaphoric agreement}).  Meanwhile, the class 10 subject marker \textit{zi-} alternates: when an associated subject NP (\textit{njûchi} ‘bees’ in (\ref{bees})) appears then it is a grammatical agreement marker, but when no subject NP appears then it functions as a pronoun.  This is captured in LFG with the simplified lexical entries in (\ref{affixes}):
+According to \citet{bresnan+mchombo:1987},  the class 2 object marker \textit{w\'{a}-} is a pronoun, so the phrase \textit{alenje} `the hunters' is not the true object but rather a postposed topic cataphorically linked to the object marker, with which it agrees in noun class (a case of \textit{anaphoric agreement}).  Meanwhile, the class 10 subject marker \textit{zi-} alternates: when an associated subject NP (\textit{njûchi} ‘bees’ in (\ref{bees})) appears then it is a grammatical agreement marker, but when no subject NP appears then it functions as a pronoun.  This is captured in LFG with the simplified lexical entries in (\ref{affixes}):
 
 \eal 
  \label{affixes}
-\ex {\makebox[4em][l]{{\it lum}\/: {\it V}}\qquad\feqs{
+\ex {\makebox[4em][l]{{\it lum}\/: V}\qquad\feqs{
 (\up \feat{pred}) = `bite$\leftangle(\up \feat{subj})(\up \feat{obj})\rangle$'}  }  
 \ex {\makebox[4em][l]{{\it w\'{a}-}\/: {\it Aff}}\qquad\feqs{
 				(\up \feat{obj} \feat{gend}) = \feat{2}\\
-                  (\up \feat{obj} \feat{pred}) = `\feat{pro}'   } }
+                  (\up \feat{obj} \feat{pred}) = `{pro}'   } }
 \ex {\makebox[4em][l]{{\it zi-}\/: {\it Aff}}\qquad\feqs{
 				(\up \feat{subj} \feat{gend}) = \feat{10}\\
-                  ((\up \feat{subj} \feat{pred}) = `\feat{pro}') } }
+                  ((\up \feat{subj} \feat{pred}) = `{pro}') } }
  \zl 
  
 \noindent
-The \feat{pred} feature in (\ref{affixes}b) is obligatory while that of (\ref{affixes}c) is optional, as indicated by the parentheses around the latter.  These entries interact with the grammar in the following manner.  The two grammatical functions governed by the verb in (\ref{affixes}a) are \feat{subj} and \feat{obj} (the \textit{governed} functions are the ones designated in the predicate argument structure of a predicator).  According to the \isi{\textit{Principle of Completeness}}, a \feat{pred} feature must appear in the f-structure for each governed grammatical function that appears within the angle brackets of a predicator (indicating assignment of a semantic role).  By the uniqueness condition it follows that there must be \textit{exactly one} \feat{pred} feature, since a second such feature would cause a clash of values.\footnote{Each \feat{pred} value is assumed to be unique, so that two `\feat{pro}' values cannot unify.}  
+The \feat{pred} feature in (\ref{affixes}b) is obligatory while that of (\ref{affixes}c) is optional, as indicated by the parentheses around the latter.  These entries interact with the grammar in the following manner.  The two grammatical functions governed by the verb in (\ref{affixes}a) are \feat{subj} and \feat{obj} (the \textit{governed} functions are the ones designated in the predicate argument structure of a predicator).  According to the \isi{\textit{Principle of Completeness}}, a \feat{pred} feature must appear in the f-structure for each governed grammatical function that appears within the angle brackets of a predicator (indicating assignment of a semantic role).  By the uniqueness condition it follows that there must be \textit{exactly one} \feat{pred} feature, since a second such feature would cause a clash of values.\footnote{Each \feat{pred} value is assumed to be unique, so that two `{pro}' values cannot unify.}  
 
-The OM {\it w\'{a}-} introduces the [\feat{pred} `\feat{pro}'] into the object field of the f-structure of this sentence; the word \textit{alenje} `hunters' introduces its own \feat{pred} feature with value `\feat{hunters}', so it cannot be the true object, and instead is assumed to be in a topic position.  \citet{bresnan+mchombo:1987} note that the OM can be omitted from the sentence, in which case the phrasal object (here, \textit{alenje}) is fixed in the immediately post-verbal position, while that phrase can alternatively be preposed when the OM appears.  This is explained by assuming that the post-verbal position is an \feat{obj} position, while the adjoined \feat{topic} position is more flexible.  
+The OM {\it w\'{a}-} introduces the [\feat{pred} `{pro}'] into the object field of the f-structure of this sentence; the word \textit{alenje} `hunters' introduces its own \feat{pred} feature with value `\feat{hunters}', so it cannot be the true object, and instead is assumed to be in a topic position.  \citet{bresnan+mchombo:1987} note that the OM can be omitted from the sentence, in which case the phrasal object (here, \textit{alenje}) is fixed in the immediately post-verbal position, while that phrase can alternatively be preposed when the OM appears.  This is explained by assuming that the post-verbal position is an \feat{obj} position, while the adjoined \feat{topic} position is more flexible.  
 
 The subject \textit{nj\^{u}chi} can be omitted from (\ref{bees}), yielding a grammatical sentence meaning `They (some plural entity named with a class 10 noun) bit them, the hunters.'  The optional \feat{pred} feature equation in (\ref{affixes}c) captures this pro-drop property: when the equation appears then a phrase such as \textit{nj\^{u}chi} cannot appear in the subject position, since this would lead to a clash of \feat{pred} values 
-(`\feat{pro}' versus `{bees}'); but when the equation is not selected then  \textit{nj\^{u}chi} must appear in the subject position in order for the f-structure to be complete.  
+(`{pro}' versus `{bees}'); but when the equation is not selected then  \textit{nj\^{u}chi} must appear in the subject position in order for the f-structure to be complete.  
 
 The diachronic process in which a pronominal affix is reanalyzed as agreement has been modeled in LFG as the historic loss of the \feat{pred} feature, along with the retention of the pronoun's person, number, and gender features \citep{coppock+wechsler:2010}.  The anaphoric agreement of the older pronoun with its antecedent then becomes reanalyzed as grammatical agreement of the inflected verb with an external nominal.  Finer transition states can also be modeled in terms of selective feature loss.  Clitic doubling can be modeled as optional loss of the \feat{pred} feature with retention of some semantic vestiges of the pronominal, such as specificity of reference.
 
@@ -595,14 +617,14 @@ In LFG a long distance dependency is modeled as a reentrancy in the f-structure.
 Both frameworks allow accounts either with or without gaps:  regarding LFG see \citet{BATW2016a} for gaps and \citet{dalrymple;ea19} for gapless; regarding HPSG see \citet{ps2} for gaps and \citet{SWB2003a} for gapless.  Gaps have been motivated by the (controversial) claim that the linear position of an empty category matters for the purpose of weak crossover and other binding phenomena 
 \citep[Chapter 9]{BATW2016a}.  In this section we compare gapless accounts.
 
-LFG has two grammaticalized discourse functions, \feat{top} (topic) and \feat{foc} (focus).  A sentence with a left-adjoined topic position is depicted in Figure~\ref{fig-tree5}.  The topic phrase \textit{Ann} serves as the object of the verb \textit{like} within the clausal complement of \textit{think}.  This dependency is encoded in the second equation annotating the topic node, where the variable \textit{x} ranges over strings of attributes representing grammatical functions such as \textsc{subj}, \textsc{obj}, \textsc{obl}, or \textsc{comp}.  These strings describe paths through the f-structure.   In this example \textit{x} is resolved to the string \textsc{comp obj}, so this equation has the effect of adding to the f-structure in (\ref{ann}) the curved line representing token identity.  
+LFG has two grammaticalized discourse functions, \feat{top} (topic) and \feat{foc} (focus).  A sentence with a left-adjoined topic position is depicted in Figure~\ref{fig-tree5}.  The topic phrase \textit{Ann} serves as the object of the verb \textit{like} within the clausal complement of \textit{think}.  This dependency is encoded in the second equation annotating the topic node, where the variable \ensuremath{x} ranges over strings of attributes representing grammatical functions such as \textsc{subj}, \textsc{obj}, \textsc{obl}, or \textsc{comp}.  These strings describe paths through the f-structure.   In this example \ensuremath{x} is resolved to the string \textsc{comp obj}, so this equation has the effect of adding to the f-structure in (\ref{ann}) the curved line representing token identity.  
 
 \begin{figure}
 \begin{forest}
 sm edges without translation
 [IP 
     [DP \\{(\up \feat{top}) $=$ \down}\\
-                         {(\up \feat{top}) $=$ (\up x)}
+                         {(\up \feat{top}) $=$ (\up \ensuremath{x})}
     [Ann] ]
     [IP                      
     		[DP [D [I]]]
@@ -639,8 +661,8 @@ The LFG dependency is expressed in the f-structure, not the c-structure.  \citet
 %The lexical entry for \textit{talk (about)} in (\ref{talk-about}) selects an \textsc{obl}$_{about}$ \textsc{obj} but does not specify the part of speech category of that argument; meanwhile, the phrase structure rules dictate that the top position allows (at least) DP and CP, while the position right adjacent to \textit{about} can only house a DP.   Category mismatches pose a problem for transformational theories that assume the Projection Principle, since the `moved' constituent should satisfy the conditions imposed on the phrase in its source position.  
 %But HPSG seems to permit essentially the same analysis as the LFG analysis just sketched.   In HPSG, the preposition \textit{about} would have a disjunctive NP/CP on its \textsc{arg-st} list item, but only NP is selected for its \textsc{comps} list item; and the topic position would allow either NP or CP.  
 
-Constraints on extraction such as accessibility conditions and \isi{island constraints}  can be captured in LFG by placing constraints on the attribute string \textit{x} \citep{dalrymple;ea19}.\footnote{\citet{asudeh-lpr} shows that LFG's \term{off-path constraints} \citep[225--230]{dalrymple;ea19} can even capture quite strict locality conditions on extraction, in the spirit of \term{successive cyclicity} in movement-based accounts \citep{Chomsky73a,Chomsky77a-u}, but without movement.} If subjects are not accessible to extraction then we stipulate that \textsc{subj} cannot be the final attribute in \textit{x}; if subjects are islands then we stipulate that \textsc{subj} cannot be a non-final attribute in \textit{x}.  If the f-structure is the only place such constraints are stated then 
-this makes the interesting (but unfortunately false; see presently) prediction that the theory of extraction cannot distinguish between constituents that map to the same f-structure.  For example, as noted in Section \ref{mobile-sec}, function words like determiners and their contentful sisters like NP are usually assumed to be f-structure co-heads, so the DP \textit{the lion} maps to the same f-structure as its daughter \textit{lion} (see diagram Figure~\ref{fig-tree1}).  This predicts that if the DP can be extracted then so can the NP, but of course that is not true:
+Constraints on extraction such as accessibility conditions and \isi{island constraints}  can be captured in LFG by placing constraints on the attribute string \ensuremath{x} \citep{dalrymple;ea19}.\footnote{\citet{asudeh-lpr} shows that LFG's \term{off-path constraints} \citep[225--230]{dalrymple;ea19} can even capture quite strict locality conditions on extraction, in the spirit of \term{successive cyclicity} in movement-based accounts \citep{Chomsky73a,Chomsky77a-u}, but without movement.} If subjects are not accessible to extraction then we stipulate that \textsc{subj} cannot be the final attribute in \ensuremath{x}; if subjects are islands then we stipulate that \textsc{subj} cannot be a non-final attribute in \ensuremath{x}.  If the f-structure is the only place such constraints are stated then 
+this makes the interesting (but unfortunately false; see presently) prediction that the theory of extraction cannot distinguish between constituents that map to the same f-structure.  For example, as noted in Section \ref{mobile-sec}, function words like determiners and their contentful sisters like NP are usually assumed to be f-structure co-heads, so the DP \textit{the lion} maps to the same f-structure as its daughter \textit{lion} (see diagram Figure~\ref{dp-tree}).  This predicts that if the DP can be extracted then so can the NP, but of course that is not true:
 
 \begin{exe} 
 \ex	\label{nope}
@@ -881,13 +903,13 @@ The rest of this section is organized as follows. In Section~\ref{sec:background
 Various theories of semantic representation have been adopted by the different non-transformational syntactic frameworks over the years.  
 The precursor to HPSG, GPSG, was paired by its designers with a then fairly standard static Montogovian semantics \citep{GKPS85a}, but GPSG itself was subsequently adopted as the syntactic framework used by \citet[9]{kamp;reyle93} for Discourse Representation Theory, a dynamic theory of semantics.  Initial work on semantics for LFG also assumed a Montogovian semantics \citep{halvorsen83,halvorsen;kaplan88}.  But with the increasing interest in Situation Semantics \citep{barwise;perry83} in the 1980s at Stanford University and environs (particularly SRI International and Xerox PARC), the sites of the foundational work on both HPSG and LFG, both frameworks also became associated with Situation Semantics.  In the case of LFG, this association was not foundational, manifesting primarily in the form of \citet{fenstad;ea87}, and soon waned. In contrast, as noted above, HPSG is a theory of signs and therefore had semantics incorporated into the theory from the outset.  Moreover, the chosen semantic theory was Situation Semantics, and this also carried over into the second main HPSG book \citep{ps2} and further \citep{ginzburg;sag00}.
 
-Beginning in the 90s, the focus subsequently shifted in new directions due to a new interest in computationally tractable
+Beginning in the nineties, the focus subsequently shifted in new directions due to a new interest in computationally tractable
 theories of the syntax--semantics interface, to support efforts at
 large-scale grammar development, such as the ParGram project for LFG
 \citep{butt;ea99,butt;ea02-pargram} and the LinGO/Grammar Matrix and CoreGram projects for HPSG
 \citep{flickinger00,bender;ea02,bender;ea10,MuellerCoreGram}.\footnote{Readers can
   explore the current incarnations of these projects at the following
-links (checked \today):
+links (checked May 9, 2020):
 \begin{description}
 \item[ParGram] \url{https://pargram.w.uib.no}
 \item[LinGO] \url{http://lingo.stanford.edu}
@@ -922,7 +944,7 @@ Tree-Adjoining Grammar \citep{frank;genabith01}, HPSG
 Universal Dependencies \citep{gotham;haug18}.
 
 In Glue Semantics, meaningful
-linguistic expressions --- including lexical items but also possibly
+linguistic expressions --- including lexical items but possibly also
 particular syntactic configurations --- are associated
 with \term{meaning constructors} of the following form:\footnote{It is
 in principle possible for a linguistic expression to have a phonology
@@ -1008,7 +1030,7 @@ natural deduction format, in which each connective has an elimination rule (\for
 \end{exe}
 
 \noindent
-Focusing first on the right-hand, linear logic side, the implication elimination rule is just standard modus ponens. The implication introduction rule is hypothetical reasoning. A hypothesis is made in the first line as an assumption, indicated by presenting it in square brackets with an index that flags the particular hypothesis/assumption. Given this hypothesis, if through some series of proof steps, indicated by the vertical ellipsis, we derive a term, then we are entitled to withdraw the assumption, using its flag to indicate that it is this particular assumption that has been withdrawn, and conclude that the hypothesis implies the term so-derived. In each of these rules, the inference over the linear logic term, \formula{G}, corresponds to an operation on the meaning term, via the Curry-Howard Isomorphism between formulas and types \citep{curry;feys58,curry;feys95,howard80}\nocite{degroote95a}. The rule for eliminating the linear implication corresponds to functional application. The rule for introducing the linear implication corresponds to functional abstraction. These rules will be seen in action shortly.
+Focusing first on the right-hand, linear logic side, the implication elimination rule is just standard modus ponens. The implication introduction rule is hypothetical reasoning. A hypothesis is made in the first line as an assumption, indicated by presenting it in square brackets with an index that flags the particular hypothesis/assumption. Given this hypothesis, if through some series of proof steps, indicated by the vertical ellipsis, we derive a term, then we are entitled to withdraw the assumption, using its flag to indicate that it is this particular assumption that has been withdrawn, and conclude that the hypothesis implies the term so-derived. In each of these rules, the inference over the linear logic term corresponds to an operation on the meaning term, via the Curry-Howard Isomorphism between formulas and types \citep{curry;feys58,curry;feys95,howard80}\nocite{degroote95a}. The rule for eliminating the linear implication corresponds to functional application. The rule for introducing the linear implication corresponds to functional abstraction. These rules will be seen in action shortly.
 
 In general, given some head \formula{h} and some arguments of the head
 \formula{a_1, \ldots, a_n}, an implicational term like the following
@@ -1147,7 +1169,7 @@ show semantic structures here, as they are not necessary for this
 simple demonstration. 
 
 
-The generalized quantifier functions associated with everybody and somebody are, respectively, \func{every} and
+The generalized quantifier functions associated with \word{everybody} and \word{somebody} are, respectively, \func{every} and
 \func{some} in the meaning language.  The universal symbol $\forall$ in the glue
 logic/linear logic terms for the quantifiers ranges over semantic structures of type $t$.  It is unrelated to the generalized quantifiers.  Hence even the existential word \word{somebody} has the 
 universal $\forall$ in its linear logic glue term. 
@@ -1443,7 +1465,7 @@ The final meaning language expressions in \exra{sws} and \exra{ows}
 
 \section{Conclusion}
 
-HPSG and LFG  are rather similar syntactic frameworks, both of them important lexicalist alternatives to transformational grammar.  They allow for the expression of roughly the same set of substantive analyses, where analyses are individuated in terms of deeper theoretical content rather than superficial properties.  The same sort of analytical options can be compared under both systems, answers to questions such as whether a phenomenon is to be captured on a lexical level or in the syntax, whether a given word string is a constituent or not, the proper treatment of complex predicates, and so on.   Analyses in one framework can often be translated to the other, preserving the underlying intuition of the account.   This stands in sharp contrast to frameworks such as Distributed Morphology and Minimalism, whose literature includes many theory-internal issues whose substantive content can be difficult to discern.  For example, phrasal constituency is directly represented in both LFG and HPSG, but not in Distributed Morphology or Minimalism, because the tree diagrams in those theories include many putative constituents for which evidence is non-existent, or at the very least scant.  
+HPSG and LFG  are rather similar syntactic frameworks, both of them important lexicalist alternatives to transformational grammar.  They allow for the expression of roughly the same set of substantive analyses, where analyses are individuated in terms of deeper theoretical content rather than superficial properties.  The same sort of analytical options can be compared under both systems, answers to questions such as whether a phenomenon is to be captured on a lexical level or in the syntax, whether a given word string is a constituent or not, the proper treatment of complex predicates, and so on.   Analyses in one framework can often be translated to the other, preserving the underlying intuition of the account.   % This stands in sharp contrast to frameworks such as Distributed Morphology and Minimalism, whose literature includes many theory-internal issues whose substantive content can be difficult to discern.  For example, phrasal constituency is directly represented in both LFG and HPSG, but not in Distributed Morphology or Minimalism, because the tree diagrams in those theories include many putative constituents for which evidence is non-existent, or at the very least scant.   
 
 Against the backdrop of a general expressive similarity, we have pointed out a few specific places where one framework makes certain modes of analysis available that are not found in the other.   The main thesis of this chapter is that the differences between the frameworks stem from different design motivations, reflecting subtly different methodological outlooks.  HPSG is rooted in context-free grammars and an interest in the study of locality.  LFG is based on the notion of functional similarity or equivalence between what are externally rather different structures (for example, fixed phrasal positions, case markers, and agreement inflections can all function similarly to signal grammatical relations).  LFG makes that functional similarity highly explicit, reflecting its functionalist-friendly outlook on grammar.  
  
@@ -1452,7 +1474,7 @@ Against the backdrop of a general expressive similarity, we have pointed out a f
 
 %\fi
 %REVERSE THESE AS NEEDED for lfg.tex:
-\printbibliography[heading=subbibliography,notkeyword=this] 
+%\printbibliography[heading=subbibliography,notkeyword=this] 
 %\input lfg-fast-bibliography.tex
 
 \let\upashtmp\up
