@@ -19,10 +19,10 @@
 \newcommand{\page}{}
 
 
-\newcommand{\todostefan}[1]{{\tikzexternaldisable\todo[color=orange!80]{\footnotesize #1}}\xspace}
-\newcommand{\todosatz}[1]{{\tikzexternaldisable\todo[color=red!40]{\footnotesize #1}}\xspace}
+\newcommand{\todostefan}[1]{{\memoizeset{disable}\todo[color=orange!80]{\footnotesize #1}}\xspace}
+\newcommand{\todosatz}[1]{{\memoizeset{disable}\todo[color=red!40]{\footnotesize #1}}\xspace}
 
-\newcommand{\inlinetodostefan}[1]{{\tikzexternaldisable\todo[color=green!40,inline]{\footnotesize #1}}\xspace}
+\newcommand{\inlinetodostefan}[1]{{\memoizeset{disable}\todo[color=green!40,inline]{\footnotesize #1}}\xspace}
 
 \newcommand{\addpages}{\todostefan{add pages}}
 \newcommand{\addglosses}{\todostefan{add glosses}}
@@ -833,7 +833,10 @@ $}}
 %\let\theauthor\@author 
 \makeatletter
 \newcommand{\togglepaper}[1][0]{ 
-  \bibliography{../Bibliographies/stmue,../localbibliography,
+  \bibliography{../Bibliographies/stmue,
+                ../localbibliography,
+../Bibliographies/formal-background,
+../Bibliographies/understudied-languages,
 ../Bibliographies/phonology,
 ../Bibliographies/case,
 ../Bibliographies/evolution,
@@ -844,17 +847,77 @@ $}}
 ../Bibliographies/argst,
 ../Bibliographies/binding,
 ../Bibliographies/complex-predicates,
+../Bibliographies/control-raising,
+../Bibliographies/coordination,
+../Bibliographies/relative-clauses,
+../Bibliographies/udc,
 ../Bibliographies/processing,
-../Bibliographies/cl,
-../Bibliographies/dg,
 ../Bibliographies/islands,
-../Bibliographies/diachronic,
 ../Bibliographies/gesture,
 ../Bibliographies/semantics,
 ../Bibliographies/pragmatics,
 ../Bibliographies/information-structure,
-../Bibliographies/idioms}
+../Bibliographies/idioms,
+../Bibliographies/cl,
+../Bibliographies/cg,
+../Bibliographies/lfg,
+../Bibliographies/dg,
+collection.bib}
   \input{../localhyphenation}
+  \memoizeset{
+    memo filename prefix={hpsg-handbook.memo.dir/},
+    % readonly
+  }
+  \papernote{\scriptsize\normalfont
+    \@author.
+    \@title. 
+    To appear in: 
+    Stefan Müller, Anne Abeillé, Robert D. Borsley \& Jean-Pierre Koenig (eds.)
+    HPSG Handbook
+    Berlin: Language Science Press. [preliminary page numbering]
+  }
+  \pagenumbering{roman}
+  \setcounter{chapter}{#1}
+  \addtocounter{chapter}{-1}
+}
+\makeatother
+
+\makeatletter
+\newcommand{\togglepaperminimal}[1][0]{ 
+  \bibliography{../Bibliographies/stmue,
+                ../localbibliography,
+% ../Bibliographies/formal-background,
+% ../Bibliographies/understudied-languages,
+% ../Bibliographies/phonology,
+% ../Bibliographies/case,
+% ../Bibliographies/evolution,
+% ../Bibliographies/agreement,
+% ../Bibliographies/lexicon,
+% ../Bibliographies/np,
+% ../Bibliographies/negation,
+% ../Bibliographies/argst,
+% ../Bibliographies/binding,
+% ../Bibliographies/complex-predicates,
+ ../Bibliographies/coordination,
+% ../Bibliographies/relative-clauses,
+% ../Bibliographies/udc,
+% ../Bibliographies/processing,
+% ../Bibliographies/cl,
+% ../Bibliographies/dg,
+ ../Bibliographies/islands,
+% ../Bibliographies/gesture,
+% ../Bibliographies/semantics,
+% ../Bibliographies/pragmatics,
+% ../Bibliographies/information-structure,
+% ../Bibliographies/idioms,
+% ../Bibliographies/cg,
+% ../Bibliographies/udc,
+collection.bib}
+  \input{../localhyphenation}
+  \memoizeset{
+    memo filename prefix={hpsg-handbook.memo.dir/},
+    % readonly
+  }
   \papernote{\scriptsize\normalfont
     \@author.
     \@title. 
@@ -889,7 +952,7 @@ $}}
     \literal{nodate}
 }
 
-\defbibheading{diachrony-sources}{\section*{Sources}} 
+%\defbibheading{diachrony-sources}{\section*{Sources}} 
 
 % if no langid is set, it is English:
 % https://tex.stackexchange.com/a/279302
@@ -993,6 +1056,9 @@ $}}
 % morphology.tex:
 % Berthold
 
+\newcommand{\dnode}[1]{\rnode{#1}{\fbox{#1}}}
+\newcommand{\tnode}[1]{\rnode{#1}{\textit{#1}}}
+
 \newcommand{\tl}[2]{#2}
 
 \newcommand{\rrr}[3]{%
@@ -1075,3 +1141,32 @@ $}}
 \newcommand{\addpagesunless}{\todostefan{add pages unless you cite the
  work as such}}
 
+% dg.tex
+% framed boxes as used in dg.tex
+% original idea from stackexchange, but modified by Saso
+% http://tex.stackexchange.com/questions/230300/doing-something-like-psframebox-in-tikz#230306
+\tikzset{
+  frbox/.style={
+    rounded corners,
+    draw,
+    thick,
+    inner sep=5pt,
+    anchor=base,
+  },
+}
+
+% get rrid of these morewrite messages:
+% https://tex.stackexchange.com/questions/419489/suppressing-messages-to-standard-output-from-package-morewrites/419494#419494
+\ExplSyntaxOn
+\cs_set_protected:Npn \__morewrites_shipout_ii:
+  {
+    \__morewrites_before_shipout:
+    \__morewrites_tex_shipout:w \tex_box:D \g__morewrites_shipout_box
+    \edef\tmp{\interactionmode\the\interactionmode\space}\batchmode\__morewrites_after_shipout:\tmp
+  }
+\ExplSyntaxOff
+
+
+% This is for places where authors used bold. I replace them by \emph
+% but have the information where the bold was. St. Mü. 09.05.2020
+\newcommand{\textbfemph}[1]{\emph{#1}}

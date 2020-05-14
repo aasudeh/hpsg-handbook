@@ -16,40 +16,6 @@
 \IfFileExists{../localcommands.tex}{%hack to check whether this is being compiled as part of a collection or standalone
   \input{../localpackages}
   \input{../localcommands}
-  \tikzset{external/prefix={hpsg-handbook.for.dir/}}
-  \forestset{external/master dir={./}}
-  \tikzexternalize
-  \input{../localhyphenation}
-  \bibliography{../Bibliographies/stmue,
-                ../localbibliography,
-../Bibliographies/formal-background,
-../Bibliographies/understudied-languages,
-../Bibliographies/phonology,
-../Bibliographies/case,
-../Bibliographies/evolution,
-../Bibliographies/agreement,
-../Bibliographies/lexicon,
-../Bibliographies/np,
-../Bibliographies/negation,
-../Bibliographies/argst,
-../Bibliographies/binding,
-../Bibliographies/complex-predicates,
-../Bibliographies/coordination,
-../Bibliographies/relative-clauses,
-../Bibliographies/udc,
-../Bibliographies/processing,
-../Bibliographies/cl,
-../Bibliographies/dg,
-../Bibliographies/islands,
-../Bibliographies/gesture,
-../Bibliographies/semantics,
-../Bibliographies/pragmatics,
-../Bibliographies/information-structure,
-../Bibliographies/idioms,
-../Bibliographies/cg,
-../Bibliographies/udc,
-collection.bib}
-
   \togglepaper[27]
 }{}
 
@@ -872,7 +838,6 @@ c3 & = & relation situation
 \z
 
 \begin{figure}[tb]
-% \ea \label{fig:cat}
 \begin{tikzpicture}[baseline=(fritz)]
   \begin{scope}[yshift=-1.2cm, xshift=-1.1cm, xslant=1.8]
     \filldraw [fill=black!20, draw=black!60, rounded corners] (0,0) rectangle (2.2,0.6);
@@ -881,7 +846,6 @@ c3 & = & relation situation
   \node [font=\sffamily] (fritz) at (1,0.5) {Fritz};
   \node [font=\sffamily] at (2.3,-1.25) {m33};
 \end{tikzpicture}
-%\z
 \caption{Fritz the cat sits on a mat.}
 \label{fig:cat}
 \end{figure}

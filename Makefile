@@ -33,6 +33,10 @@ main.pdf: $(SOURCE)
 	makeindex -o main.snd main.sdx 
 	xelatex -shell-escape main
 
+trees:
+	xelatex main.tex
+	memoize-split.py main.mmz
+
 stable.pdf: main.pdf
 	cp main.pdf stable.pdf
 	cp collection_tmp.bib chapters/collection.bib
@@ -41,9 +45,18 @@ stable.pdf: main.pdf
 chop: stable.pdf 
 	egrep "contentsline \{chapter\}" main.toc | egrep -o "\{[0-9]+\}\{chapter\*\.[0-9]+\}" |  egrep -o "[0-9]+\}\{chapter"|egrep -o "[0-9]+" > cuts.txt
 	egrep -o "\{chapter\}\{Indexes\}\{[0-9]+\}\{section\*\.[0-9]+\}" main.toc| egrep -o ".*\."|egrep -o "[0-9]+" >> cuts.txt
-	bash chopchapters.sh 13 chapters main
+	bash chopchapters.sh 15 chapters main
 # does not work on mac	
 #	bash chopchapters.sh `grep "mainmatter starts" main.log|egrep -o "[0-9]*"`
+
+
+# make all (in chapters) on texlive 2019 to create the trees = 32:43
+
+
+trees:
+	xelatex -shell-escape main
+	xelatex -shell-escape trees
+
 
 commit-stable: chop 
 	git commit -m "automatic creation of stable.pdf and chapters" stable.pdf chapters/collection.bib chapters-pdfs/
@@ -63,6 +76,14 @@ prepublish-commit: prepublish-pdfs
 	git push -u origin
 
 
+memo-commit:
+	# add all PDFs and all memo|s.
+	git add -A chapters/hpsg-handbook.memo.dir/*.pdf chapters/hpsg-handbook.memo.dir/*.memo
+	# -a option deltes files that disappeared
+	git commit -a -m "momoized figures" 
+
+# add this here and push everything that was staged or do it via gui
+#	git push -u origin
 
 FINALIZED= chapters/evolution.tex chapters/lexicon.tex chapters/case.tex chapters/idioms.tex
 
@@ -363,21 +384,23 @@ biosketch.html: blurb.md
 clean:
 	rm -f *.bak *~ *.backup \
 	*.adx *.and *.idx *.ind *.ldx *.lnd *.sdx *.snd *.rdx *.rnd *.wdx *.wnd \
-	*.log *.blg *.bcf *.aux.copy *.ilg \
+	*.log *.blg *.bcf *.aux.copy *.auxlock *.ilg \
 	*.aux *.toc *.cut *.out *.tpm *.bbl *-blx.bib *_tmp.bib \
 	*.glg *.glo *.gls *.wrd *.wdv *.xdv *.mw *.clr \
 	*.run.xml \
-	chapters/*.aux chapters/*.aux.copy chapters/*.old chapters/*~ chapters/*.bak chapters/*.backup chapters/*.blg\
+	chapters/*.aux chapters/*.auxlock chapters/*.aux.copy chapters/*.old chapters/*~ chapters/*.bak chapters/*.backup chapters/*.blg\
 	chapters/*.log chapters/*.out chapters/*.mw chapters/*.ldx  chapters/*.bbl chapters/*.bcf chapters/*.run.xml\
 	chapters/*.blg chapters/*.idx chapters/*.sdx chapters/*.run.xml chapters/*.adx chapters/*.ldx\
 	langsci/*/*.aux langsci/*/*~ langsci/*/*.bak langsci/*/*.backup \
 	chapter-pdfs/* cuts.txt
 
-cleanfor: # These files are precious, as it takes a long time to produce them all.
-	rm -f *.for *.for.tmp chapters/*.for chapters/*.for.tmp hpsg-handbook.for.dir/*
+cleanmemo:
+	rm -f chapters/*.mmz chapters/hpsg-handbook.memo.dir/*
 
 realclean: clean
-	rm -f *.dvi *.ps *.pdf
+	rm -f *.dvi *.ps *.pdf chapters/*.pdf
+
+brutal-clean: realclean cleanmemo
 
 chapterlist:
 	grep chapter main.toc|sed "s/.*numberline {[0-9]\+}\(.*\).newline.*/\\1/"

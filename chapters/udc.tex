@@ -14,44 +14,8 @@
 \IfFileExists{../localcommands.tex}{%hack to check whether this is being compiled as part of a collection or standalone
   \input{../localpackages}
   \input{../localcommands}
-  \tikzset{external/prefix={hpsg-handbook.for.dir/}}
-  \forestset{external/master dir={./}}
-  \tikzexternalize
-  \input{../localhyphenation}
-  \bibliography{../Bibliographies/stmue,
-                ../localbibliography,
-../Bibliographies/formal-background,
-../Bibliographies/understudied-languages,
-../Bibliographies/phonology,
-../Bibliographies/case,
-../Bibliographies/evolution,
-../Bibliographies/agreement,
-../Bibliographies/lexicon,
-../Bibliographies/np,
-../Bibliographies/negation,
-../Bibliographies/argst,
-../Bibliographies/binding,
-../Bibliographies/complex-predicates,
-../Bibliographies/coordination,
-../Bibliographies/relative-clauses,
-../Bibliographies/udc,
-../Bibliographies/processing,
-../Bibliographies/cl,
-../Bibliographies/dg,
-../Bibliographies/islands,
-../Bibliographies/diachronic,
-../Bibliographies/gesture,
-../Bibliographies/semantics,
-../Bibliographies/pragmatics,
-../Bibliographies/information-structure,
-../Bibliographies/idioms,
-../Bibliographies/cg,
-../Bibliographies/udc,
-collection.bib}
-
   \togglepaper[14]
 }{}
-
 
 
 \author{Robert D. Borsley\affiliation{University of Essex and Bangor University}
@@ -228,7 +192,7 @@ constituent.\footnote{The basic approach derives from the earlier
   feature's name equally derives from this heritage, referring to the
   GPSG notation whereby X/Y stands for a category X containing a gap of
   category Y.  } Much HPSG work assumes the feature geometry in
-Figure~\ref{fig:UDC:9}, following \citet{Pollard:Sag:94}:
+Figure~\ref{fig:UDC:9}, following \citet[Chapter~4]{Pollard:Sag:94}:
 
 \begin{figure}[htb]
   \centering
@@ -312,10 +276,11 @@ the right role here. First, however, we need to say more about gaps.
 On the view of gaps we are focusing on here, they are only represented in
 \textsc{arg-st} lists. Thus, the preposition \emph{to} in (\ref{ex:UDC:10}) has a gap in its
 \textsc{arg-st} list but nothing in its \textsc{comps} list and therefore, no complement
-in constituent structure. Gaps have the feature make up given in (\ref{ex:UDC:12}):
+in constituent structure. Gaps have the feature make up given in
+(\ref{ex:UDC:12}):
 \ea
 \label{ex:UDC:12}
-Representation of gaps:\\
+Representation of gaps \citep[160]{Pollard:Sag:94}:\\
 \begin{avm}
     \[local & \@1\\
     nonlocal & \[slash & \{ \@1 \} \] \]
@@ -493,7 +458,9 @@ What did you put \trace{} on the table?
 \noindent
 Probably the most widely assumed position is that gaps are only
 represented in \textsc{arg-st} lists
-\citep[see][]{Sag:97,Bouma:Malouf:Sag:01,Ginzburg:Sag:01,Sag:10a}. On
+(see \citealt[Section~4.1]{Sag:97},
+\citealt[Section~2.2]{Bouma:Malouf:Sag:01},
+\citealt[Chapter~5.1]{Ginzburg:Sag:01} and \citealt{Sag:10a}). On
 this view, the verb \textit{put} will have the
 following, somewhat simplified structure:
 
@@ -532,7 +499,7 @@ here has the same \textsc{slash} value as the gap. We will discuss the latter in
 the next section.
 
 The view that gaps are empty categories was a feature of early HPSG
-work, notably \citet{Pollard:Sag:94}, and it has been assumed in some
+work, notably \citet[Chapter~4]{Pollard:Sag:94}, and it has been assumed in some
 more recent work, e.g. \citet{Levine:Hukari:06,Borsley:09a,Borsley:13,Mueller:14b}. On
 this view, the VP will have the following structure:
 
@@ -589,7 +556,7 @@ Again we ignore the \textsc{comps} feature and how the VP here has the same \tex
 value as the gap.
 
 It is not easy to choose between these two approaches. One argument in
-favour of the first view, advanced, for example, in \citet{Bouma:Malouf:Sag:01}, is that it makes it unsurprising that a gap cannot be one
+favour of the first view, advanced, for example, in \citet[Section~3.5.2]{Bouma:Malouf:Sag:01}, is that it makes it unsurprising that a gap cannot be one
 conjunct of a coordinate structure, as in the following:
 
 \begin{exe} \ex \begin{xlist} \label{ex:UDC:22}
@@ -607,7 +574,7 @@ categories.\footnote{Coordination is a problem for any empty category,
   not just the empty categories that represent gaps in some HPSG
   work. Various empty categories have been proposed in the HPSG
   literature, most prominently the empty relativiser of
-  \citet{Pollard:Sag:94}. \citet[15.3.5]{Sag:Wasow:ea:03}
+  \citet[Chapter~5]{Pollard:Sag:94}. \citet[15.3.5]{Sag:Wasow:ea:03}
   propose that African American Vernacular English has a
   phonologically empty form of the copula. This analysis requires some
   mechanism to prevent this form from appearing as a conjunct. It is
@@ -712,7 +679,7 @@ of finite verbs and the objects of prepositions and non-finite verbs:
 according to \citet{Borsley89}, a unified treatment can be given if
 subjects of finite verbs are the first element on \textsc{comps}, an
 assumption that directly captures Welsh VSO word order.\footnote{
-  \citet{Borsley:16:Archi} argues on rather different grounds that
+  \citet[Section~5.4]{Borsley:16:Archi} argues on rather different grounds that
   agreement in the Caucasian language Archi involves constraints on
   constituent structure, which will favour a trace-based perspective on
   extraction. }
@@ -903,16 +870,19 @@ The examples in (\ref{ex:UDC:25}) show that a gap is possible in
 object position in a complement clause whether or not it is introduced
 by \emph{that}. In contrast, the examples in (\ref{ex:UDC:26}) suggest
 that a gap is only possible in subject position in a complement clause
-if it is not introduced by \emph{that}. \citet{Pollard:Sag:94}
-approach this contrast by stipulating that gaps cannot appear in
-subject position. This accounts for the ungrammaticality of examples
-like (\ref{ex:UDC:26}b). Examples like (\ref{ex:UDC:26}a) are allowed
-by allowing verbs like \textit{think} to take a VP complement and have a
-non-empty value for \textsc{slash}. \citet{Ginzburg:Sag:01} offer a very
-different account, in which subject gaps appear both in \textsc{arg-st} list
-and \textsc{subj} lists. They suggest that examples like (\ref{ex:UDC:26}b) are
-ungrammatical because \emph{that} cannot combine with a constituent
-which has a non-empty \textsc{subj} list.
+if it is not introduced by
+\emph{that}. \citet[Chapter~4.4]{Pollard:Sag:94} approach this
+contrast by stipulating that gaps cannot appear in subject
+position. This accounts for the ungrammaticality of examples like
+(\ref{ex:UDC:26}b). Examples like (\ref{ex:UDC:26}a) are allowed by
+allowing verbs like \textit{think} to take a VP complement and have a
+non-empty value for
+\textsc{slash}. \citet[Chapter~5.1.3]{Ginzburg:Sag:01} offer a very
+different account, in which subject gaps appear both in
+\textsc{arg-st} list and \textsc{subj} lists. They suggest that
+examples like (\ref{ex:UDC:26}b) are ungrammatical because \emph{that}
+cannot combine with a constituent which has a non-empty \textsc{subj}
+list.
 
 An important fact about subject gaps is that they are not completely
 impossible in a complement clause introduced by \emph{that}. In
@@ -937,7 +907,7 @@ in complement position but not in subject position.
 We turn now to adjunct gaps. It is not obvious that there is a gap in
 examples like (\ref{ex:UDC:6}) repeated as (\ref{ex:UDC:28}), because
 no obligatory constituent is missing.\footnote{This position has initially
-  been taken in \citet{Pollard:Sag:94}. } 
+  been taken in \citet[176--180]{Pollard:Sag:94}. } 
 
 \avmoptions{center}
 \begin{exe}
@@ -1124,7 +1094,7 @@ To ensure that the \textsc{slash} value of a phrase is normally the same as that
 of its head, much work employs a Slash Inheritance Principle, which
 stipulates that a phrase and its head have the same value for \textsc{slash}
 except at the top of a dependency (see, e.g. \citealt{Bouma:Malouf:Sag:01}:
-20). An alternative approach developed in \citet{Ginzburg:Sag:01} uses
+20). An alternative approach developed in \citet[Chapter~5.1]{Ginzburg:Sag:01} uses
 the Generalised Head Feature Principle for this purpose. This says that
 a headed phrase and its head daughter have the same \textsc{synsem} values unless
 some other constraint requires something different. Among other things,
@@ -1178,10 +1148,10 @@ examples of asymmetric coordination like the following:
 % \pdfmargincomment[color=red]{BB: I suspect Chaves argues that they are gaps but I will have to check.}
 
 \noindent
-Early HPSG \citep{Pollard:Sag:94} accounts for the distribution of
+Early HPSG \citep[Chapter~4]{Pollard:Sag:94} accounts for the distribution of
 \textsc{slash} by means of the Nonlocal Feature Principle, and related
 principles are proposed by \citet[354]{Levine:Hukari:06} and
-\citet{Chaves:12}. These principles ensure that the \textsc{slash}
+\citet[497]{Chaves:12}. These principles ensure that the \textsc{slash}
 value of a phrase reflects the \textsc{slash} values of all its
 daughters (using set union) and apply equally to headed and non-headed
 structures. Thus, the examples in (\ref{ex:UDC:35}) are no problem for
@@ -1426,7 +1396,7 @@ fact that \emph{the}-clauses may contain the complementiser
 subtypes. This new type will be subject to a constraint preventing its
 head from containing a complementiser. The type \emph{the-cl} will not
 be a subtype of this new type and hence will be able to contain a
-complementiser (see \citealt{Borsley:11} for discussion). All this suggests
+complementiser (see \citealt[13--15]{Borsley:11} for discussion). All this suggests
 the type hierarchy in Figure~\ref{fig:UDC:50}. 
 %
 \begin{figure}[htb]
@@ -1610,7 +1580,7 @@ allows a relative clause with clausal semantics to combine with a
 nominal and be interpreted in the right way. One might well wonder how
 satisfactory this approach is.
 
-\citet{Sag:10a} shows that it is a simple matter to assign modifier semantics
+\citet[Section~5.4]{Sag:10a} shows that it is a simple matter to assign modifier semantics
 to a relative clause where the basic clause is the daughter of some
 other element, as it is when there is a filler or a complementiser. The
 basic clause can have clausal semantics, and the mother can have modifier
@@ -1860,7 +1830,7 @@ pronominal argument coindexed with its slashed value''. Consequently,
 he extends Slash Amalgamation to optionally include a
 \textsc{slash} element coindexed with an unslashed pronominal
 argument. This move licenses Welsh resumptives in a structure like the
-one in Figure~\ref{fig:WelshResump} below:
+one in Figure~\ref{fig:WelshResump} below.
 
 \begin{figure}[htb]
   \centering
@@ -1898,7 +1868,7 @@ sm edges without translation
 %%     \end{avm}
 %%   }
 
-\noindent
+
 Thus, the only difference between gaps and resumptives on his account
 is that the former give rise to a reentrancy of an element in
 \textsc{slash} with a \textsc{local} value on \textsc{arg-st}, whereas
@@ -1916,7 +1886,10 @@ head, rather than on the pronominal, not only provides a good match for
 the Welsh data, but it also addresses McCloskey's generalisation
 \citep{mccloskey02:_resum_succes_cyclic_local_operat} that resumptives
 are always the ordinary pronouns, since no lexical ambiguity between
-slashed and unslashed pronouns is involved.
+slashed and unslashed pronouns is
+involved.\footnote{Cf. e.g. \citet{abeillegodard07} for an ambiguity
+  approach, treating reentrancy of \textsc{local} and \textsc{slash}
+  as optional for French pronouns. }
 
 In contrast to Borsley, who developed his theory of resumption on the
 basis of a language where the distribution of gaps vs.\ resumptives is
@@ -2133,16 +2106,18 @@ principled account of the data, essentially obviating stipulative
 nominative case assignment that fails to correspond to any overtly
 observable case marking.
 
-Some questions still remain: \citet{taghvaipour:phd:05}\addpages claims that in
-Persian, the distribution of gaps vs.\ resumptives is partly
-determined by the constructional properties of the top of the
-dependency, showing different patterns for non-restrictive,
-restrictive and free relative clauses, and suggests that
-constructional properties of the top need to be transmitted via
-\textsc{slash}.  However, percolation of constructional information
-across the tree does not play nicely with basic assumptions
-of locality within HPSG. It remains to be seen how the case of Persian
-can be analysed within the scope of the theories outlined above.
+% That claim is the main argument of the thesis and distributed over
+% several chapters 
+Some questions still remain: \citet[Section 6.5]{taghvaipour:phd:05}
+suggests that in Persian, the distribution of gaps vs.\ resumptives is
+partly determined by the constructional properties of the top of the
+dependency, showing different patterns for wh-extraction, free
+relatives and ordinary relatives, and suggests that constructional
+properties of the top need to be transmitted via \textsc{slash}.
+However, percolation of constructional information across the tree
+does not play nicely with basic assumptions of locality within
+HPSG. It remains to be seen how the case of Persian can be analysed
+within the scope of the theories outlined above.
 
 Another case study that deserves integration into the current HPSG
 theory of resumption concerns so-called hybrid chains in Irish
@@ -2639,7 +2614,7 @@ becomes highly questionable.
 
 Another line of proposals capitalises on the differences between
 complement and adjunct extraposition: as argued by
-\citet{kiss_t02nllt}\addpages, the non-locality observed with relative clause
+\citet[284]{kiss_t02nllt}, the non-locality observed with relative clause
 extraposition in German does not translate to complement extraposition
 in equal measure.
 
@@ -2655,14 +2630,13 @@ in equal measure.
       \glt `The messenger was insulted who delivered the message that
       the world is a sphere.' \hfill\citep[282]{kiss_t02nllt}}
 
-    \ex[]{\gll Man hat [die Frau [des Boten \_$_i$ ]] heftig
+    \ex[]{\gll Man hat [die Frau [des Boten \_$_i$ ]]
       beschimpft,
       [der den Befehl überbrachte]$_i$. \\
-      one has \spacebr{}the wife \spacebr{}of.the messenger {} {} heavily insulted \spacebr{}who the
-      command
+      one has \spacebr{}the wife \spacebr{}of.the messenger {} {} scolded \spacebr{}who the
+      order
       delivered\\
-      \glt `The wife of the messenger who delivered the command was
-      heavily insulted.' \hfill \citep{haider96:_downr_down_to_right}}\addpages
+      \glt `People have scolded the wife of the messenger who delivered the order.' \hfill \hfill\citep[259]{haider96:_downr_down_to_right}}
   \end{xlist}
 \end{exe}
 
@@ -2695,8 +2669,8 @@ extraction-like property of complement extraposition:
   \ex[*]{
 \gll Das Verlies  hat er, [als er \_$_i$ verließ], gelacht.\\
      the dungeons has he  \spacebr{}when he {}  left laughed\\
-    \glt `He laughed when he left the dungeons.' \hfill \citep{haider96:_downr_down_to_right}
-  } \label{ex:ExtractAdj}\addpages
+    \glt `He laughed when he left the dungeons.' \hfill \citep[261]{haider96:_downr_down_to_right}
+  } \label{ex:ExtractAdj}
 \end{exe}
 
 Furthermore, Kiss observes that relative clause extraposition may give
@@ -2733,8 +2707,6 @@ adjoin to.\footnote{See
     \setbox\onetwobox=\hbox{[\textsc{ANCS} \{\fbox{i},\fbox{j}\}]}
     \setbox\emptybox=\hbox{[\textsc{ANCS} \{ \}]}
 
-\tikzexternaldisable
-    
 \oneline{
     \Tree [ [ [ [ den ].{D \usebox{\emptybox}} [ [ Beweis
     ].{N \usebox{\onebox}} [ [ der ].{D \usebox{\emptybox}} [ Theorie
@@ -3209,5 +3181,5 @@ in a \textsc{gap} list and not in a \textsc{valence} list.
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../main"
+%%% TeX-master: "../main-udc"
 %%% End:

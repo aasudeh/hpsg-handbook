@@ -8,8 +8,8 @@
                 ,babelshorthands
 %                ,showindex
                 ,newtxmath
-                ,draftmode
                 ,colorlinks, citecolor=brown 
+                ,draftmode
 % 	        ,coverus
 		  ]{./langsci/langscibook}                              
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,31 +22,21 @@
 \input{localpackages.tex}
 \input{localhyphenation.tex}
 \input{localcommands.tex} 
-\input{bibliographies-include}
 
 
-%\usepackage{trees} % remove me!!!!!
-%\newcommand{\tree}[1]{} % ignore them blody tree
-%\usepackage{tree-dvips}
+%\includeonly{chapters/preface,chapters/properties,chapters/evolution,chapters/formal-background}
 
-% fix, remove once forest is updated
-% should work with texlive 2017
-%% \makeatletter
-%% \apptocmd\forest@pgfmathhelper@attribute@dimen{\global\pgfmathunitsdeclaredtrue}{\typeout{patching succeeded}}{patching failed}
-%% \apptocmd\forest@pgfmathhelper@register@dimen{\global\pgfmathunitsdeclaredtrue}{\typeout{patching succeeded}}{patching failed}
-%% \makeatother 
-
+%\includeonly{chapters/preface}
 % \includeonly{chapters/properties}
 %\includeonly{chapters/evolution}
 %\includeonly{chapters/formal-background}
 %\includeonly{chapters/understudied-languages}
 %\includeonly{chapters/agreement}
-%\includeonly{chapters/lexicon}
-\includeonly{chapters/arg-st}
+\includeonly{chapters/lexicon}
+%\includeonly{chapters/arg-st}
 %\includeonly{chapters/negation}
-\includeonly{chapters/ellipsis}
+%\includeonly{chapters/ellipsis}
 %\includeonly{chapters/order}
-%\includeonly{chapters/diachronic}
 %\includeonly{chapters/case}
 %\includeonly{chapters/udc}
 %\includeonly{chapters/coordination}
@@ -64,6 +54,7 @@
 %\includeonly{chapters/pragmatics}
 %\includeonly{chapters/gesture}
 %\includeonly{chapters/cl}
+%\includeonly{chapters/cl,chapters/dg,chapters/cg,chapters/lfg,chapters/minimalism,chapters/cxg}
 
 %\includeonly{chapters/dg}
 %\includeonly{chapters/cg}
@@ -75,8 +66,6 @@
 
 \input{bibliographies-include}
 
-%\bibliography{Bibliographies/coordination-safe}
-
 \usepackage{xassoccnt}
 \newcounter{realpage}
 \DeclareAssociatedCounters{page}{realpage}
@@ -86,6 +75,7 @@
 
 % Morning is broooooken
 %\usepackage{chappg}
+
 
 
 
@@ -122,6 +112,7 @@
 % Uncomment the chapter(s) you would like to check
 
 \part{Introduction}
+
 \includepaper{chapters/properties}
 \includepaper{chapters/evolution} 
 \includepaper{chapters/formal-background}
@@ -129,6 +120,7 @@
 \includepaper{chapters/understudied-languages}
 % 
 \part{Syntactic phenomena}
+
 \includepaper{chapters/agreement}
 \includepaper{chapters/case}
 \includepaper{chapters/np}
@@ -147,14 +139,14 @@
 \includepaper{chapters/binding}
 %
 \part{Other levels of description}
-\includepaper{chapters/phonology}
+
 \includepaper{chapters/morphology}
 \includepaper{chapters/semantics}
 \includepaper{chapters/information-structure}
 %
 \part{Other areas of linguistics}
-\includepaper{chapters/diachronic}
-\includepaper{chapters/acquisition}
+
+%\includepaper{chapters/acquisition}
 \includepaper{chapters/processing}
 \includepaper{chapters/cl}
 \includepaper{chapters/pragmatics}

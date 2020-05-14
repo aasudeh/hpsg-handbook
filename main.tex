@@ -34,13 +34,6 @@
 \input{localhyphenation.tex}
 \input{localcommands.tex} 
 
-% fix, remove once forest is updated
-% should work with texlive 2017
-%% \makeatletter
-%% \apptocmd\forest@pgfmathhelper@attribute@dimen{\global\pgfmathunitsdeclaredtrue}{\typeout{patching succeeded}}{patching failed}
-%% \apptocmd\forest@pgfmathhelper@register@dimen{\global\pgfmathunitsdeclaredtrue}{\typeout{patching succeeded}}{patching failed}
-%% \makeatother 
-
 
 \input{bibliographies-include}
 
@@ -51,14 +44,16 @@
   \stepcounter{realpage}
 }
 
-\tikzexternalize
+%\memoizeset{readonly}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                                              %%%
 %%%             Frontmatter                      %%%
 %%%                                              %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{document}         
+
+\begin{document}
+
 \maketitle                
 \frontmatter
 % %% uncomment if you have preface and/or acknowledgements
@@ -91,7 +86,7 @@
 \includepaper{chapters/formal-background}
 \includepaper{chapters/lexicon}
 \includepaper{chapters/understudied-languages}
-% 
+ 
 \part{Syntactic phenomena}
 
 \includepaper{chapters/agreement}
@@ -99,7 +94,7 @@
 \includepaper{chapters/np}
 \includepaper{chapters/arg-st}
 \includepaper{chapters/order}
-\includepaper{chapters/clitics}
+%\includepaper{chapters/clitics}
 \includepaper{chapters/complex-predicates}
 \includepaper{chapters/control-raising}
 \includepaper{chapters/udc}
@@ -159,3 +154,9 @@
 % you can also try a simple 
 % make
 % on the commandline
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-engine: xetex
+%%% End:

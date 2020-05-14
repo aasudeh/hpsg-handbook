@@ -15,41 +15,6 @@
 \IfFileExists{../localcommands.tex}{%hack to check whether this is being compiled as part of a collection or standalone
   \input{../localpackages}
   \input{../localcommands}
-  \tikzset{external/prefix={hpsg-handbook.for.dir/}}
-  \forestset{external/master dir={./}}
-  \tikzexternalize
-  \input{../localhyphenation}
-  \bibliography{../Bibliographies/stmue,
-                ../localbibliography,
-../Bibliographies/formal-background,
-../Bibliographies/understudied-languages,
-../Bibliographies/phonology,
-../Bibliographies/case,
-../Bibliographies/evolution,
-../Bibliographies/agreement,
-../Bibliographies/lexicon,
-../Bibliographies/np,
-../Bibliographies/negation,
-../Bibliographies/argst,
-../Bibliographies/binding,
-../Bibliographies/complex-predicates,
-../Bibliographies/coordination,
-../Bibliographies/relative-clauses,
-../Bibliographies/udc,
-../Bibliographies/processing,
-../Bibliographies/cl,
-../Bibliographies/dg,
-../Bibliographies/islands,
-../Bibliographies/gesture,
-../Bibliographies/semantics,
-../Bibliographies/pragmatics,
-../Bibliographies/information-structure,
-../Bibliographies/idioms,
-../Bibliographies/morphology,
-../Bibliographies/cg,
-../Bibliographies/udc,
-collection.bib}
-
   \togglepaper[22]
 }{}
 
@@ -84,6 +49,7 @@ collection.bib}
 \label{chap-morphology}
 
 {\avmoptions{center}
+
 
 \section{Introduction}
 \label{morphology-sec:Intro}
@@ -223,8 +189,8 @@ Second, she conducts a detailed empirical study of \textit{-bar}
 \textit{-bar} adjectives, which derive from strictly transitive verbs and
 introduce both modality and a  passivisation effect, there is a 
 broader class of similar formations which adhere to some of the
-properties, but not others.\todostefan{redraw this. Dots touch lines, words touch lines, should be
-  STRUCTURE not STUCTURE}
+properties, but not others.% \todostefan{redraw this. Dots touch lines, words touch lines, should be
+  % STRUCTURE not STUCTURE}
 
 \begin{figure}[htb]
   \centering
@@ -301,7 +267,7 @@ One property that is almost trivial concerns suffixation of
 exclusive property of \textit{-bar} adjectives, so this property can
 be abstracted out into the supertype \textit{suffixed} in
 (\ref{fig:riehemannSuff}): the type \textit{bar-adj} in
-Figure~\ref{gig:Riehemann} inherits this property and specifies the
+Figure~\ref{fig:Riehemann} inherits this property and specifies the
 concrete shape of the list appended to the morphological base.
 
 \begin{exe}
@@ -380,12 +346,92 @@ type from one dimension with exactly one leaf type from the other.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[scale=.84]{figures/OTC-crop.pdf}
-  
+
+  \footnotesize
+  \avmoptions{bottom}
+  \psset{angleA=-90,angleB=90,arm=0pt}
+
+  \resizebox{\textwidth}{!}{%
+    \tabcolsep.2\tabcolsep
+  \begin{tabular}{ccccccc}
+    \multicolumn{4}{c}{\tnode{lexeme}} \\[2ex]
+    \multicolumn{2}{c}{\dnode{ROOT}}  & \multicolumn{2}{c}{\dnode{VALENCE}}\\[2ex]
+    \multicolumn{2}{c}{\rnode{verbs} {
+    \begin{avm}
+      \[\asort{verbs}
+      cat & V\]
+    \end{avm}
+}}\\     \rnode{kill}{
+    \begin{avm}
+      \[\asort{kill-lxm} ph & kill\\
+      cont & \[reln & kill-rel\\
+      act & index\\
+      und & index\]\] 
+    \end{avm}
+}  & \rnode{resurrect}{\begin{avm}
+      \[\asort{resurrect-lxm} ph & resurrect\\
+      cont & \[reln & resurrect-rel\\
+      act & index\\
+      und & index\]\] 
+    \end{avm}
+}  & \rnode{trans}{\begin{avm}
+      \[\asort{trans-lxm}
+      cat & \[hd & v\\
+        subj & \< NP$_{\@x}$ \>\\
+      comps & \< NP$_{\@y}$ \>\]\\
+      cont & \[act & \@x\\
+      und & \@y\]
+      \]
+    \end{avm}
+            }
+        & 
+       \rnode{pass}{\begin{avm}
+        \[\asort{pass-lxm}
+          cat & \[hd & v\\
+            subj & \< NP$_{\@y}$ \>\\
+            comps & \< PP$_{\@x}$ \>\]\\
+          cont & \[act & \@x\\
+              und & \@y\]
+          \]
+         \end{avm}}
+    \\[6em] 
+             
+             
+    \rnode{kill-act}{\colorbox[gray]{1}{\textit{kill-lxm} $\wedge$ \textit{trans-lxm}}} &
+    \rnode{kill-pass}{\colorbox[gray]{1}{\textit{kill-lxm} $\wedge$ \textit{pass-lxm}}} &
+    \rnode{resurrect-act}{\colorbox[gray]{1}{\textit{resurrect-lxm} $\wedge$ \textit{trans-lxm}}} &
+    \rnode{resurrect-pass}{\colorbox[gray]{1}{\textit{resurrect-lxm} $\wedge$ \textit{pass-lxm}}}
+    
+        \psset{linewidth=.6pt,nodesep=2pt}                                                                                            
+    \ncdiag{lexeme}{ROOT}
+    \ncdiag{lexeme}{VALENCE}
+    \ncdiag{ROOT}{verbs}
+    \ncdiag{VALENCE}{trans}
+    \ncdiag{VALENCE}{pass}
+
+    \ncdiag[linestyle=dashed]{kill}{kill-act}
+    \ncdiag[linestyle=dashed]{resurrect}{resurrect-act}
+    \ncdiag[linestyle=dashed]{kill}{kill-pass}
+    \ncdiag[linestyle=dashed]{resurrect}{resurrect-pass}
+    \ncdiag[linestyle=dashed]{trans}{kill-act}
+    \ncdiag[linestyle=dashed]{trans}{resurrect-act}
+    \ncdiag[linestyle=dashed]{pass}{kill-pass}
+    \ncdiag[linestyle=dashed]{pass}{resurrect-pass}
+%    \ncdiag{pass}{rumored}
+
+    \ncdiag{verbs}{kill}
+    \ncdiag{verbs}{resurrect}
+    % \ncdiag{verbs}{hate}
+ %   \ncdiag{verbs}{rumored}
+
+    
+    
+  \end{tabular}
+ } 
+
   \caption{Online type construction}
   \label{fig:KoenigDyn}
 \end{figure}
-% Ex. love/hate -> kill/resurrect 
 
 An important aspect of this integration of alternations
 into the hierarchical lexicon is that it becomes quite straightforward 
@@ -399,14 +445,78 @@ type in both dimensions.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[scale=.63]{figures/pretyping-crop.pdf}
+
+
+\resizebox{\textwidth}{!}{%  
+  \psset{angleA=-90,angleB=90,arm=0pt}
+    \tabcolsep.2\tabcolsep
+  \begin{tabular}{ccccccc}
+    \multicolumn{4}{c}{\tnode{lexeme}} \\[2ex]
+    \multicolumn{2}{c}{\dnode{ROOT}}  & \multicolumn{2}{c}{\dnode{VALENCE}}\\[2ex]
+    \multicolumn{2}{c}{\rnode{verbs}{
+    \begin{avm}
+      \[\asort{verbs}
+      cat & \[hd & v\]\]
+    \end{avm}
+}} & \rnode{trans}{\begin{avm}
+      \[  \asort{trans}
+        cat & \[hd & v\\
+          subj & \< NP$_{\@x}$ \>\\
+          comps & \< NP$_{\@y}$ \>
+                \]\\
+       cont & \[act & {\@x}\\
+       und & {\@y} \]
+      \]
+    \end{avm}}
+        &
+      \rnode{pass}{\begin{avm}
+       \[\asort{pass}
+
+       cat & \[hd & v\\subj & \< NP$_{\@y}$ \>\\
+       comps & \< PP$_{\@x}$ \>\]\\
+     cont & \[act & {\@x}\\
+       und & {\@y}\]
+       \]
+    \end{avm}}  \\[6em] 
+    \rnode{own}{
+    \begin{avm}
+      \[ph & own\\
+      cont & \[\asort{own-rel}
+      act & index\\
+      und & index\]\] 
+    \end{avm}
+}  & \rnode{have}{\begin{avm}
+      \[ph & have\\
+            cont & \[\asort{have-rel}
+      act & index\\
+      und & index\]
+\] 
+    \end{avm}
+}  &
+    \tnode{reg-trans} & \tnode{reg-pass}\\
+
+    \psset{linewidth=.6pt,nodesep=2pt}                                                                       
+    \ncdiag{lexeme}{ROOT}
+    \ncdiag{lexeme}{VALENCE}
+    \ncdiag{ROOT}{verbs}
+    \ncdiag{VALENCE}{trans}
+    \ncdiag{VALENCE}{pass}
+
+    \ncdiag{trans}{reg-trans}
+    \ncdiag{trans}{have}
+    \ncdiag{pass}{reg-pass}
+%    \ncdiag{pass}{rumored}
+
+    \ncdiag{verbs}{own}
+    \ncdiag{verbs}{have}
+ %   \ncdiag{verbs}{rumored}
+    
+  \end{tabular}
+}
 
   \caption{Exceptions via pre-typing}
   \label{fig:KoenigPre}
 \end{figure}
-
-% Ex. pretyping
-
 
 
 Online Type Construction successfully integrates systematic
@@ -420,17 +530,18 @@ morphology.\footnote{\citet{Blevins2003a} discusses the interaction
   between passives and impersonals in Baltic and Slavic languages and
   shows that at least a three-fold distinction of argument structure
   is needed in purely inheritance-based approaches. See
-  \citet{ASU99a-u} for an account along these lines. \citew[\page
+  \citet{ASU99a-u} for an account along these lines.  \citew[\page
   925--927]{MuellerUnifying} and \citew[Section~8.1]{MWArgSt} take a
   highly skeptical stance, arguing that interactions in grammatical
   function change depend on the possibility for one lexical rule to
   apply to the output of another, or, as in the case of Turkish
-  causatives a rule may even apply more than once. Since
-  \citet{Koenig99} already recognises recursive lexeme types for
-  derivational morphology, there is no reason why lexical rules thus
-  conceived should not be embraced for grammatical function change as
-  well, ultimately yielding an approach that can scale up to more
-  complex interactions.  } % \footnote{%
+  causatives a rule may even apply more than
+  once. See also \citew[Section~7.5.2.2]{MuellerLehrbuch1} for  extensive
+  discussion fo this issue. Since \citet{Koenig99} already recognises
+  recursive lexeme types for derivational morphology, there is no
+  reason why lexical rules thus conceived should not be embraced for
+  grammatical function change as well, ultimately yielding an approach
+  that can scale up to more complex interactions.  } % \footnote{%
   % It should be noted that the OTC approach did not go unchallenged. A
   % detailed discussion can be found in
   % \citew[Section~7.5.2.2]{MuellerLehrbuch1}. See also \citew[\page
@@ -610,24 +721,24 @@ nor do they lend themselves to be analysed as a default.
   \label{tab:ParaSplit}
 \end{table}
 
-In Table~\ref{tab:ParaSplit}a, we find a perfect alignment of
+In Table~\ref{tab:ParaSplit}(a), we find a perfect alignment of
 syncretic forms along the number dimension. By contrast,
-Figure~\ref{tab:ParaSplit}b illustrates the case discussed above,
+Figure~\ref{tab:ParaSplit}(b) illustrates the case discussed above,
 where two specific cells constitute overrides to a general default
 pattern (here: zero exponence). Default forms need not involve zero
 exponence. German features a Pāṇinian split in another paradigm where
 all forms are marked with \textit{-en} (e.g. \textit{Mensch-en}
 `human(s)'), except the nominative singular (\textit{Mensch}
 `human\textsc{.nom.sg}'), which constitutes a zero
-override. Table~\ref{tab:ParaSplit}c illustrates how a Pāṇinian split
+override. Table~\ref{tab:ParaSplit}(c) illustrates how a Pāṇinian split
 in the singular can combine with a natural split between singular and
-plural. Finally, Figure~\ref{tab:ParaSplit}d witnesses what could be
+plural. Finally, Table~\ref{tab:ParaSplit}(d) witnesses what could be
 taken as a morphomic split, where there is no natural alignment
 between form and function, and no clear way to establish what is the
 default and what is the override.
 
 The patterns we have just seen have two clear implications for
-morphological theory: first,  morphologists generally believe that
+morphological theory: first, many morphologists believe that
 a version of Pāṇini's Principle, whereby more specific forms can block
 more general ones, must be part of morphological theory, since
 otherwise many generalisations will be lost. 
@@ -839,7 +950,7 @@ pairings of exponents and morpho-syntactic features stand in
 paradigmatic opposition. Furthermore, neither completely uninflected
 roots, nor partially derived words (e.g. lacking agreement
 information) shall be able to function as lexical signs, so it is
-necessary to enforce that inflection be applied. The and/or
+necessary to enforce that inflection be applied. The and/""or
 logic of dimensions and types he proposed appears to be very
 well-suited to account for these properties. 
 
@@ -901,7 +1012,8 @@ constructions as given in Figure~\ref{fig:KoenigSwahili}.
 ]
 \draw (1sg.south) to (neg.north);
 \end{forest}
-  \caption{Koenig's constructional approach to Swahili position classes}\label{fig:KoenigSwahili}
+  \caption{Koenig's (\citeyear{Koenig99}) constructional approach to Swahili position
+    classes}\label{fig:KoenigSwahili}
 \end{figure}
 
 As shown in Table~\ref{tab:SwahiliPast}, tensed verbs with plural
@@ -911,7 +1023,7 @@ preceding in turn the exponent of tense. \citet{Koenig99} proposes
 three dimensions of inflectional construction types that correspond to
 the three positional prefix slots. Since dimensions are conjunctive, a
 well-formed Swahili word must inherit from exactly one type in each
-dimension. As he states, the and/or logic of dimensions and types is
+dimension. As he states, the and/""or logic of dimensions and types is
 the declarative analogue of the conjunctive rule blocks and
 disjunctive rules in A-morphous Morphology \citep{Anderson92}.
 
@@ -1018,7 +1130,7 @@ up to a full treatment of Pāṇinian competition.\footnote{This is
   dimension (e.g. a default tense, or a default agreement marking),
   each would need its own diacritic feature.}
 
-\citet{Koenig99} proposes two variants of a morphological and/or lexical blocking
+\citet{Koenig99} proposes two variants of a morphological and/""or lexical blocking
 theory. In essence, he builds on a previous formulation by
 \citet{Andrews90} within LFG to define a notion of morphological
 competition based on subsumption. Since competition is between
@@ -1931,13 +2043,13 @@ properties, i.e. nominal class. \label{Nyanja}
   \ex \label{ex:NyanjaQualConc}
      {\gll ci-pewa ca-ci-kulu\\
     \textsc{cl7}-hat(7/8) \textsc{qual7}-\textsc{conc7}-large\\
-    \glt `a large hat'}
+    \glt `a large hat' \hfill\citep[6]{Stump01}}
   \ex{\label{ex:NyanjaConc} \gll ci-lombo ci-kula.\\
     \textsc{cl7}-weed \textsc{conc7}-grow\\
-    \glt `A weed grows.'}
+    \glt `A weed grows.' \hfill\citep[6]{Stump01}}
   \ex{\label{ex:NyanjaQual} \gll ci-manga ca-bwino\\
     \textsc{cl7}-maize \textsc{qual7}-good\\
-    \glt `good maize'}
+    \glt `good maize' \hfill \citep[6]{Stump01}}
 \end{exe}
 
 \citet{Crysmann:14:OUP} shows that double inflection as in Nyanja
@@ -2529,7 +2641,7 @@ as in Figure~\ref{fig:Matthews}.
     \rnode{u1}{\textsc{beak}} & \rnode{u2}{\textsc{gen}} & \rnode{u3}{\textsc{pl}}\\[2ex]
     \rnode{l1}{nokk} & \rnode{l2}{-a} & \rnode{l3}{-de}
   \end{tabular}
-      \psset{angleA=-90,angleB=90,arm=0pt,linewidth=.5pt}
+      \psset{angleA=-90,angleB=90,arm=0pt,linewidth=.5pt,nodesep=2pt}
 
       \ncdiag{u1}{l1} \ncdiag{u1}{l2} \ncdiag{u2}{l1} \ncdiag{u2}{l3}
       \ncdiag{u3}{l1} \ncdiag{u3}{l2} \ncdiag{u3}{l3}
@@ -2740,11 +2852,11 @@ cislocative in a different surface position from the translocative.
     Contrastive & Factual & & Optative & Repetitive & Optative &
                                                                  Factual
                  & \\
-    Coincident & & Future & & Optative & &  \\
+    Coincident & & & Future & & Optative & &  \\
     Partitive & & & & & & &\\
     \lspbottomrule
   \end{tabular}
-  \caption{Position classes of Oneida inflectional prefixes}
+  \caption{Position classes of Oneida inflectional prefixes \citep{diaz:koenig:michelson:19}}
   \label{tab:Oneida}
 \end{table}
 
